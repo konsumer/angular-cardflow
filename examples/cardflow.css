@@ -1,0 +1,157 @@
+/* just a demo, feel free to make this however you like in your app */
+
+.cardflow-container {
+    -webkit-perspective: 900;
+    overflow: hidden;
+    display: block;
+
+    width: 100%;
+    height: 290px;
+    padding-top: 80px;
+    background-image: -webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0.05, rgb(46,46,46)),
+        color-stop(0.53, rgb(0,0,0))
+    );
+}
+
+.cardflow-card{
+    position: absolute;
+
+    width: 200px;
+    height: 200px;
+    -webkit-box-reflect: below 1px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(0.6, transparent), to(rgba(255, 255, 255, 0.5)));
+    box-shadow: 0px 0px 20px 0px rgba(255, 255, 255, .3);
+    color: white;
+    text-shadow: 2px 4px 3px rgba(0,0,0,0.3);
+    text-align: center;
+    line-height:200px;
+    background: #000;
+    background-size:cover;
+
+    margin-left: 50%; /* center cards to parent. 0-card is active */
+
+    -webkit-transition: all 0.25s ease-in-out;
+    -moz-transition: all 0.25s ease-in-out;
+    -o-transition: all 0.25s ease-in-out;
+    transition: all 0.25s ease-in-out;
+    
+    transform: translate(0px,0);
+    -webkit-transform: translate(0px,0);
+    -o-transform: translate(0px,0);
+    -moz-transform: translate(0px,0);
+}
+
+/*
+
+YUCK: hardcocded. there must be a better way...
+var width=220, out='';
+for (i=0;i<100;i++){
+    out += '.cardflow-card:nth-child('+(i+1)+'){ left: ' + (i*width) + 'px; }\n';
+}
+console.log(out);
+
+*/
+
+.cardflow-card:nth-child(1){ left: 0px; }
+.cardflow-card:nth-child(2){ left: 220px; }
+.cardflow-card:nth-child(3){ left: 440px; }
+.cardflow-card:nth-child(4){ left: 660px; }
+.cardflow-card:nth-child(5){ left: 880px; }
+.cardflow-card:nth-child(6){ left: 1100px; }
+.cardflow-card:nth-child(7){ left: 1320px; }
+.cardflow-card:nth-child(8){ left: 1540px; }
+.cardflow-card:nth-child(9){ left: 1760px; }
+.cardflow-card:nth-child(10){ left: 1980px; }
+.cardflow-card:nth-child(11){ left: 2200px; }
+.cardflow-card:nth-child(12){ left: 2420px; }
+.cardflow-card:nth-child(13){ left: 2640px; }
+.cardflow-card:nth-child(14){ left: 2860px; }
+.cardflow-card:nth-child(15){ left: 3080px; }
+.cardflow-card:nth-child(16){ left: 3300px; }
+.cardflow-card:nth-child(17){ left: 3520px; }
+.cardflow-card:nth-child(18){ left: 3740px; }
+.cardflow-card:nth-child(19){ left: 3960px; }
+.cardflow-card:nth-child(20){ left: 4180px; }
+.cardflow-card:nth-child(21){ left: 4400px; }
+.cardflow-card:nth-child(22){ left: 4620px; }
+.cardflow-card:nth-child(23){ left: 4840px; }
+.cardflow-card:nth-child(24){ left: 5060px; }
+.cardflow-card:nth-child(25){ left: 5280px; }
+.cardflow-card:nth-child(26){ left: 5500px; }
+.cardflow-card:nth-child(27){ left: 5720px; }
+.cardflow-card:nth-child(28){ left: 5940px; }
+.cardflow-card:nth-child(29){ left: 6160px; }
+.cardflow-card:nth-child(30){ left: 6380px; }
+.cardflow-card:nth-child(31){ left: 6600px; }
+.cardflow-card:nth-child(32){ left: 6820px; }
+.cardflow-card:nth-child(33){ left: 7040px; }
+.cardflow-card:nth-child(34){ left: 7260px; }
+.cardflow-card:nth-child(35){ left: 7480px; }
+.cardflow-card:nth-child(36){ left: 7700px; }
+.cardflow-card:nth-child(37){ left: 7920px; }
+.cardflow-card:nth-child(38){ left: 8140px; }
+.cardflow-card:nth-child(39){ left: 8360px; }
+.cardflow-card:nth-child(40){ left: 8580px; }
+.cardflow-card:nth-child(41){ left: 8800px; }
+.cardflow-card:nth-child(42){ left: 9020px; }
+.cardflow-card:nth-child(43){ left: 9240px; }
+.cardflow-card:nth-child(44){ left: 9460px; }
+.cardflow-card:nth-child(45){ left: 9680px; }
+.cardflow-card:nth-child(46){ left: 9900px; }
+.cardflow-card:nth-child(47){ left: 10120px; }
+.cardflow-card:nth-child(48){ left: 10340px; }
+.cardflow-card:nth-child(49){ left: 10560px; }
+.cardflow-card:nth-child(50){ left: 10780px; }
+.cardflow-card:nth-child(51){ left: 11000px; }
+.cardflow-card:nth-child(52){ left: 11220px; }
+.cardflow-card:nth-child(53){ left: 11440px; }
+.cardflow-card:nth-child(54){ left: 11660px; }
+.cardflow-card:nth-child(55){ left: 11880px; }
+.cardflow-card:nth-child(56){ left: 12100px; }
+.cardflow-card:nth-child(57){ left: 12320px; }
+.cardflow-card:nth-child(58){ left: 12540px; }
+.cardflow-card:nth-child(59){ left: 12760px; }
+.cardflow-card:nth-child(60){ left: 12980px; }
+.cardflow-card:nth-child(61){ left: 13200px; }
+.cardflow-card:nth-child(62){ left: 13420px; }
+.cardflow-card:nth-child(63){ left: 13640px; }
+.cardflow-card:nth-child(64){ left: 13860px; }
+.cardflow-card:nth-child(65){ left: 14080px; }
+.cardflow-card:nth-child(66){ left: 14300px; }
+.cardflow-card:nth-child(67){ left: 14520px; }
+.cardflow-card:nth-child(68){ left: 14740px; }
+.cardflow-card:nth-child(69){ left: 14960px; }
+.cardflow-card:nth-child(70){ left: 15180px; }
+.cardflow-card:nth-child(71){ left: 15400px; }
+.cardflow-card:nth-child(72){ left: 15620px; }
+.cardflow-card:nth-child(73){ left: 15840px; }
+.cardflow-card:nth-child(74){ left: 16060px; }
+.cardflow-card:nth-child(75){ left: 16280px; }
+.cardflow-card:nth-child(76){ left: 16500px; }
+.cardflow-card:nth-child(77){ left: 16720px; }
+.cardflow-card:nth-child(78){ left: 16940px; }
+.cardflow-card:nth-child(79){ left: 17160px; }
+.cardflow-card:nth-child(80){ left: 17380px; }
+.cardflow-card:nth-child(81){ left: 17600px; }
+.cardflow-card:nth-child(82){ left: 17820px; }
+.cardflow-card:nth-child(83){ left: 18040px; }
+.cardflow-card:nth-child(84){ left: 18260px; }
+.cardflow-card:nth-child(85){ left: 18480px; }
+.cardflow-card:nth-child(86){ left: 18700px; }
+.cardflow-card:nth-child(87){ left: 18920px; }
+.cardflow-card:nth-child(88){ left: 19140px; }
+.cardflow-card:nth-child(89){ left: 19360px; }
+.cardflow-card:nth-child(90){ left: 19580px; }
+.cardflow-card:nth-child(91){ left: 19800px; }
+.cardflow-card:nth-child(92){ left: 20020px; }
+.cardflow-card:nth-child(93){ left: 20240px; }
+.cardflow-card:nth-child(94){ left: 20460px; }
+.cardflow-card:nth-child(95){ left: 20680px; }
+.cardflow-card:nth-child(96){ left: 20900px; }
+.cardflow-card:nth-child(97){ left: 21120px; }
+.cardflow-card:nth-child(98){ left: 21340px; }
+.cardflow-card:nth-child(99){ left: 21560px; }
+.cardflow-card:nth-child(100){ left: 21780px; }

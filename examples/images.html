@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="angular-cardflow-example">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="user-scalable=0, initial-scale=1.0">
+        <title>Cardflow Images Example</title>
+        <link href="demo.css" rel="stylesheet">
+        <link href="cardflow.css" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.11/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.11/angular-touch.min.js"></script>
+        <script src="../cardflow.js"></script>
+    </head>
+
+    <body ng-controller="example-controller">
+        <cardflow cards="cards">
+            <div class="cardflow-card" ng-repeat="card in cards" style="background-image: url( {{card.image}} )">
+                {{ card.title }}
+            </div>
+        </cardflow>
+    </body>
+
+    <script>
+    // Example controller
+    angular.module('angular-cardflow-example', ['angular-cardflow'])
+        .controller('example-controller', function($scope){
+            // generate 40 cards
+            $scope.cards = [];
+            var types = ['cats','fashion','nature','food','abstract','nightlife'];
+            for (var i=0; i<40; i++){
+                var t = types[i % types.length];
+                $scope.cards.push({image:'http://lorempixel.com/200/200/' + t + '/'+((i%10)+1), title: t + ' ' + i});
+            }
+        });
+    </script>
+</html>

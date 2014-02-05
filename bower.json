@@ -1,0 +1,15 @@
+{
+  "name": "angular-cardflow",
+  "version": "0.0.1",
+  "main": "cardflow.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/konsumer/angular-cardflow"
+  },
+  "author": "David Konsumer <konsumer@jetboystudio.com>",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "dependencies": {
+    "angular-touch": "~1.2.11"
+  }
+}
