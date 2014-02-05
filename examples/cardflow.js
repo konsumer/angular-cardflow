@@ -19,10 +19,10 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
                 var px = scope.offset*cardWidth;
                 
                 cards.css({
-                    'transform': 'translate('+px+'px,0)',
-                    '-webkit-transform': 'translate('+px+'px,0)',
-                    '-o-transform': 'translate('+px+'px,0)',
-                    '-moz-transform': 'translate('+px+'px,0)'
+                    'transform': 'translate3d('+px+'px,0,0)',
+                    '-webkit-transform': 'translate3d('+px+'px,0,0)',
+                    '-o-transform': 'translate3d('+px+'px,0,0)',
+                    '-moz-transform': 'translate3d('+px+'px,0,0)'
                 });
             }
 
