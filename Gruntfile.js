@@ -23,6 +23,7 @@ module.exports = function(grunt) {
 
 	grunt.registerTask('page', 'Publish examples to github pages', ['gh-pages']);
 	grunt.registerTask('server', 'Run local static webserver for examples', ['connect']);
+	grunt.registerTask('serve', ['connect:server']);
 	grunt.registerTask('default', ['page']);
 
 };
