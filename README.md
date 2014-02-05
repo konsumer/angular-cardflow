@@ -1,6 +1,6 @@
 # Angular Cardflow
 
-This is for making ng-repeat items that flow into a nice & efficient coverflow.  It is inspired by [angular-coverflow](https://github.com/southdesign/angular-coverflow), but differs in that it can handle images, divs, or whatever you like that is ng-repeating.
+This is for making ng-repeat items that flow into a nice & efficient coverflow.  It is inspired by [angular-coverflow](https://github.com/southdesign/angular-coverflow), but differs in that it can handle images, divs, or whatever you like that is ng-repeating, and I am trying to use more angular libraries.
 
 This is currently incomplete. I am still working out the basic idea.
 
