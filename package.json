@@ -1,0 +1,25 @@
+{
+  "name": "angular-cardflow",
+  "version": "0.0.0",
+  "description": "This is for making ng-repeat items that flow into a nice & efficient coverflow.  It is inspired by [angular-coverflow](https://github.com/southdesign/angular-coverflow), but differs in that it can handle images, divs, or whatever you like that is ng-repeating.",
+  "main": "cardflow.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/konsumer/angular-cardflow.git"
+  },
+  "author": "David Konsumer <konsumer@jetboystudio.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/konsumer/angular-cardflow/issues"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-gh-pages": "~0.9.0"
+  }
+}
