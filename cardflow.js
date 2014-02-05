@@ -11,19 +11,22 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
 
             // update offset
             function update(delta){
-                var cards = element.children().children();
-                scope.offset += delta;
+                if ((delta == 1 && scope.offset < 0) || (delta == -1 && scope.offset > (-1 * scope.cards.length)+1)){
+                    var cards = element.children().children();
+                    scope.offset += delta;
 
-                // cardWidth is left positioning of second card.
-                var cardWidth = parseInt(window.getComputedStyle(cards[1])['left'], 10);
-                var px = scope.offset*cardWidth;
-                
-                cards.css({
-                    'transform': 'translate3d('+px+'px,0,0)',
-                    '-webkit-transform': 'translate3d('+px+'px,0,0)',
-                    '-o-transform': 'translate3d('+px+'px,0,0)',
-                    '-moz-transform': 'translate3d('+px+'px,0,0)'
-                });
+                    // cardWidth is left positioning of second card.
+                    var cardWidth = parseInt(window.getComputedStyle(cards[1])['left'], 10);
+                    var px = scope.offset*cardWidth;
+                    
+                    cards.css({
+                        'transform': 'translate3d('+px+'px,0,0)',
+                        '-webkit-transform': 'translate3d('+px+'px,0,0)',
+                        '-o-transform': 'translate3d('+px+'px,0,0)',
+                        '-moz-transform': 'translate3d('+px+'px,0,0)'
+                    }).removeClass('cardflow-active');
+                    angular.element(cards[scope.offset*-1]).addClass('cardflow-active');
+                }
             }
 
             scope.updateLeft = function(){

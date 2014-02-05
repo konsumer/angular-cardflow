@@ -23,6 +23,11 @@
     width: 200px;
     height: 200px;
     -webkit-box-reflect: below 1px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(0.6, transparent), to(rgba(255, 255, 255, 0.5)));
+    
+    -moz-box-shadow:    0 0 8px 8px rgba(0,0,0,0.5);
+    -webkit-box-shadow: 0 0 8px 8px rgba(0,0,0,0.5);
+    box-shadow:         0 0 8px 8px rgba(0,0,0,0.5);
+
     color: white;
     text-shadow: 2px 4px 3px rgba(0,0,0,0.3);
     text-align: center;
@@ -32,15 +37,21 @@
 
     margin-left: 50%; /* center cards to parent. 0-card is active */
 
-    -webkit-transition: -webkit-transform 0.5s;
-    -moz-transition: -moz-transform 0.5s ease-in;
-    -o-transition: -o-transform 0.5s ease-in;
-    transition: transform 0.5s ease-in;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s ease-in;
+    -o-transition: all 0.5s ease-in;
+    transition: all 0.5s ease-in;
     
     -webkit-transform: translate3d(0,0,0);
     transform: translate3d(0,0,0);
     -o-transform: translate3d(0,0,0);
     -moz-transform: translate3d(0,0,0);
+}
+
+.cardflow-card.cardflow-active {
+    -moz-box-shadow:    0 0 4px 4px rgba(127,127,127,0.5);
+    -webkit-box-shadow: 0 0 4px 4px rgba(127,127,127,0.5);
+    box-shadow:         0 0 4px 4px rgba(127,127,127,0.5);
 }
 
 /*
