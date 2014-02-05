@@ -2,6 +2,10 @@
 
 This is for making ng-repeat items that flow into a nice & efficient coverflow.  It is inspired by [angular-coverflow](https://github.com/southdesign/angular-coverflow), but differs in that it can handle images, divs, or whatever you like that is ng-repeating.
 
+This is currently incomplete. I am still working out the basic idea.
+
+See an [example](http://konsumer.github.io/angular-cardflow/)
+
 ## Usage
 
 See files in `examples` for uage examples, but here's the basics:
