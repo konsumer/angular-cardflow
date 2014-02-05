@@ -8,7 +8,7 @@ See an [example](http://konsumer.github.io/angular-cardflow/)
 
 ## Usage
 
-See files in `examples` for uage examples, but here's the basics:
+See files in `examples` for usage examples, but here's the basics:
 
 1. Include the cardflow.js script provided by this component into your app.
 2. Add angular-cardflow as a module dependency to your app.
