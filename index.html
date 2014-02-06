@@ -35,6 +35,16 @@
             //model to hold info about cardflow
             $scope.cardflow = {};
 
+            // scale active, rather than just setting it's offset
+            $scope.cardflow.onActive = function(el, offset, scope){
+                el.css({
+                    'transform': 'translate3d('+offset+'px,0,0) scale(1.2)',
+                    '-webkit-transform': 'translate3d('+offset+'px,0,0) scale(1.2)',
+                    '-o-transform': 'translate3d('+offset+'px,0,0) scale(1.2)',
+                    '-moz-transform': 'translate3d('+offset+'px,0,0) scale(1.2)'
+                });
+            }
+
             // generate 40 cards
             $scope.cards = [];
             var types = ['cats','fashion','nature','food','abstract','nightlife'];

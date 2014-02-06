@@ -29,7 +29,14 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
                         '-o-transform': 'translate3d('+px+'px,0,0)',
                         '-moz-transform': 'translate3d('+px+'px,0,0)'
                     }).removeClass('cardflow-active');
-                    angular.element(scope.cardEls[scope.offset*-1]).addClass('cardflow-active');
+                    
+                    var active = angular.element(scope.cardEls[scope.offset*-1]);
+
+                    active.addClass('cardflow-active');
+                    if (scope.model.onActive){
+                        scope.model.onActive(active, px, scope);
+                    }
+
                 }
             }
 
