@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="user-scalable=0, initial-scale=1.0">
-        <title>Cardflow Images Example</title>
+        <title>Cardflow</title>
         <link href="demo.css" rel="stylesheet">
         <link href="cardflow.css" rel="stylesheet">
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.11/angular.min.js"></script>
@@ -12,17 +12,28 @@
     </head>
 
     <body ng-controller="example-controller">
-        <cardflow cards="cards">
+        <a id="github" href="https://github.com/konsumer/angular-cardflow">view on github</a>
+        <h1>Image Cardflow</h1>
+        <p>Swipe left or right to advance cards by 1.</p>
+        
+        <button ng-disabled="cardflow.current <= 0" ng-click="cardflow.updateRight()">&lt;</button> {{ cardflow.current+1 }} / {{ cards.length }}
+        <button ng-disabled="cardflow.current >= (cards.length-1)" ng-click="cardflow.updateLeft()">&gt;</button>
+
+        <cardflow cards="cards" model="cardflow">
             <div class="cardflow-card" ng-repeat="card in cards" style="background-image: url( {{card.image}} )">
                 {{ card.title }}
             </div>
         </cardflow>
+
     </body>
 
     <script>
     // Example controller
     angular.module('angular-cardflow-example', ['angular-cardflow'])
         .controller('example-controller', function($scope){
+            //model to hold info about cardflow
+            $scope.cardflow = {};
+
             // generate 40 cards
             $scope.cards = [];
             var types = ['cats','fashion','nature','food','abstract','nightlife'];
