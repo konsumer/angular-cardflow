@@ -3,26 +3,29 @@
 angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe', '$compile', '$window', function($swipe, $compile, $window) {
     return {
         'restrict': 'E',
-        'template':'<div class="cardflow-container" ng-transclude ng-swipe-left="updateLeft()" ng-swipe-right="updateRight()"></div>',
+        'template':'<div class="cardflow-container" ng-transclude ng-swipe-left="swipeLeft()" ng-swipe-right="swipeRight()"></div>',
         transclude: true,
-        'scope': { 'cards': '=', 'model':'=' },
+        'scope': { 'model':'=?', 'type':'=?', 'pad':'=?' },
         'link': function(scope, element, attrs) {
-            scope.offset = 0;
             scope.model = scope.model ||  {};
-
-            scope.model.current = scope.offset;
+            scope.type = scope.type || 'swipeSnap';
+            scope.pad = scope.pad || 10;
+            
+            scope.model.current = 0;
 
             // update offset
             function update(delta){
-                scope.cardEls = element.children().children();
-                scope.cardWidth = parseInt(window.getComputedStyle(scope.cardEls[1])['left'], 10);
-
                 // delta bounds
-                if (delta === 0 || ((delta === 1 && scope.offset < 0) || (delta === -1 && scope.offset > (-1 * scope.cards.length)+1))){
-                    scope.offset += delta;
-                    scope.model.current = scope.offset * -1;
-                    var px = scope.offset*scope.cardWidth;
+                if (delta === 0 || (delta === -1 && scope.model.current > 0) || (delta === 1 && scope.model.current < (scope.cardEls.length-1) ) ){
                     
+                    // do I really need to re-calculate this every time?
+                    // there must be a better way...
+                    scope.cardEls = element.children().children();
+                    scope.cardWidth = scope.cardEls[1].offsetHeight + scope.pad;
+
+                    scope.model.current += delta;
+                    var px = scope.model.current*scope.cardWidth*-1;
+
                     scope.cardEls.css({
                         'transform': 'translate3d('+px+'px,0,0)',
                         '-webkit-transform': 'translate3d('+px+'px,0,0)',
@@ -30,34 +33,49 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
                         '-moz-transform': 'translate3d('+px+'px,0,0)'
                     }).removeClass('cardflow-active');
                     
-                    var active = angular.element(scope.cardEls[scope.offset*-1]);
-
+                    var active = angular.element(scope.cardEls[scope.model.current]);
                     active.addClass('cardflow-active');
                     if (scope.model.onActive){
                         scope.model.onActive(active, px, scope);
                     }
-
                 }
             }
 
-            // ugly hack to add active when scope is available & when window resized
+            // ugly hack to add active when transcluded elements are available
             setTimeout(function(){
-                update(0);
-            }, 100);
+                scope.cardEls = element.children().children();
+                scope.cardWidth = scope.cardEls[1].offsetHeight + scope.pad;
 
+                angular.forEach(scope.cardEls, function(el, i){
+                    angular.element(el).css({ left: (i * scope.cardWidth) + 'px' });
+                });
+
+                update(0);
+
+                if (scope.type == 'swipeSnap'){
+
+                }
+            }, 10);
+
+            // on window resize, update translate
             angular.element($window).bind('resize',function(){
                 update(0);
             });
 
-            scope.updateLeft = function(){
-                update(-1);
+            scope.swipeLeft = function(){
+                if (scope.type == 'swipeSnapOne'){
+                    update(1);
+                }
             }
-            scope.model.updateLeft = scope.updateLeft;
 
-            scope.updateRight = function(){
-                update(1);
+            scope.swipeRight = function(){
+                if (scope.type == 'swipeSnapOne'){
+                    update(-1);
+                }
             }
-            scope.model.updateRight = scope.updateRight;
+
+            scope.model.left = function(){ update(1); };
+            scope.model.right = function(){ update(-1); };
         }
     };
 }]);
