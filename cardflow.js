@@ -5,17 +5,22 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
         'restrict': 'E',
         'template':'<div class="cardflow-container" ng-transclude ng-swipe-left="updateLeft()" ng-swipe-right="updateRight()"></div>',
         transclude: true,
-        'scope': { 'cards': '=' },
+        'scope': { 'cards': '=', 'model':'=' },
         'link': function(scope, element, attrs) {
             scope.offset = 0;
+            scope.model = scope.model ||  {};
+
+            scope.model.current = scope.offset;
 
             // update offset
             function update(delta){
                 scope.cardEls = element.children().children();
                 scope.cardWidth = parseInt(window.getComputedStyle(scope.cardEls[1])['left'], 10);
 
+                // delta bounds
                 if (delta === 0 || ((delta === 1 && scope.offset < 0) || (delta === -1 && scope.offset > (-1 * scope.cards.length)+1))){
                     scope.offset += delta;
+                    scope.model.current = scope.offset * -1;
                     var px = scope.offset*scope.cardWidth;
                     
                     scope.cardEls.css({
@@ -40,10 +45,12 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
             scope.updateLeft = function(){
                 update(-1);
             }
+            scope.model.updateLeft = scope.updateLeft;
 
             scope.updateRight = function(){
                 update(1);
             }
+            scope.model.updateRight = scope.updateRight;
         }
     };
 }]);
