@@ -5,20 +5,20 @@
         <meta name="viewport" content="user-scalable=0, initial-scale=1.0">
         <title>Cardflow</title>
         <link href="demo.css" rel="stylesheet">
-        <link href="cardflow.css" rel="stylesheet">
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.11/angular.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.11/angular-touch.min.js"></script>
-        <script src="cardflow.js"></script>
+        <script src="http://konsumer.github.io/angular-cardflow/cardflow.min.js"></script>
+        <link href="http://konsumer.github.io/angular-cardflow/cardflow.css" rel="stylesheet">
     </head>
 
     <body ng-controller="example-controller">
         <a id="github" href="https://github.com/konsumer/angular-cardflow">view on github</a>
-        <h1>Image Cardflow</h1>
+        <h1>Cardflow</h1>
         <p>Swipe left or right. <a href="simple.html">Here</a> is a simpler example. <a href="carousel.html">Here</a> is an example that is sort of like angular-carousel.</p>
         
         <!-- use this sort of thing if you want to add advancing buttons, complete with disabling for bounds -->
-        <button ng-click="cardflow.right()" ng-disabled="cardflow.current <= 0">&lt;</button> {{ cardflow.current+1 }} / {{ cards.length }}
-        <button ng-click="cardflow.left()"  ng-disabled="cardflow.current >= (cards.length-1)">&gt;</button>
+        <button ng-click="cardflow.current=cardflow.current-1" ng-disabled="cardflow.current <= 0">&lt;</button> {{ cardflow.current+1 }} / {{ cards.length }}
+        <button ng-click="cardflow.current=cardflow.current+1"  ng-disabled="cardflow.current >= (cards.length-1)">&gt;</button>
 
         <cardflow model="cardflow">
             <div class="cardflow-card" ng-repeat="card in cards" style="background-image: url( {{card.image}} )">
