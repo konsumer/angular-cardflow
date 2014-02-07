@@ -5,13 +5,13 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
         'restrict': 'E',
         'template':'<div class="cardflow-container" ng-transclude ng-swipe-left="swipeLeft()" ng-swipe-right="swipeRight()"></div>',
         transclude: true,
-        'scope': { 'model':'=?', 'type':'=?', 'pad':'=?', 'animTime':'=?', 'current':'=?' },
+        'scope': { 'model':'=?', 'atype':'=?', 'pad':'=?', 'animTime':'=?', 'current':'=?' },
         'link': function(scope, element, attrs) {
             // model for reaching into this for callbacks and data-binding
             scope.model = scope.model ||  {};
             
             // swipeSnap or swipeSnapOne
-            scope.type =attrs.type || 'swipeSnap';
+            scope.atype = attrs.atype || 'swipeSnap';
 
             // margin for cards
             scope.pad = scope.pad || 10;
@@ -71,7 +71,7 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
 
                     updatePosition(0);
 
-                    if (scope.type == 'swipeSnap'){
+                    if (scope.atype == 'swipeSnap'){
                         // calculate card to move to with start/end
                         // move cards on move (for a grab effect)
                         var startTime=0;
@@ -131,17 +131,17 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
                 updatePosition(0);
             });
 
-            console.log(scope.type);
+            console.log(scope.atype);
 
             scope.swipeLeft = function(){
-                if (scope.type == 'swipeSnapOne'){
+                if (scope.atype == 'swipeSnapOne'){
                     console.log('left');
                     updatePosition(1);
                 }
             }
 
             scope.swipeRight = function(){
-                if (scope.type == 'swipeSnapOne'){
+                if (scope.atype == 'swipeSnapOne'){
                     console.log('right');
                     updatePosition(-1);
                 }
