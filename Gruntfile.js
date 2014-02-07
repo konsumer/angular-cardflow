@@ -10,7 +10,7 @@ module.exports = function(grunt) {
 		'copy': {
 			'page':{
 				'files':[
-					{expand: true, flatten: true, src: ['examples/**'], dest: '.grunt/temp/'},
+					{expand: true, flatten: true, filter: 'isFile', src: ['examples/**'], dest: '.grunt/temp/'},
 				]
 			}
 		},
