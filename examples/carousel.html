@@ -17,7 +17,11 @@
         <p>This is sort of like <a href="https://github.com/revolunet/angular-carousel">angular-carousel</a></p>
         <p>Swipe left or right to advance 1 card. <a href="index.html">Here</a> is a more scrollee example. <a href="simple.html">Here</a> is a simple example.</p>
 
-        <div>{{ cardflow.current+1 }} / {{ cards.length }}</div>
+        <div>
+            <button ng-click="cardflow.current=cardflow.current-1" ng-disabled="cardflow.current <= 0">&lt;</button> {{ cardflow.current+1 }} / {{ cards.length }}
+            <button ng-click="cardflow.current=cardflow.current+1"  ng-disabled="cardflow.current >= (cards.length-1)">&gt;</button>
+            <button ng-click="cardflow.current=4" >jump to #5</button>
+        </div>
 
         <cardflow atype="swipeSnapOne" margin="1" model="cardflow">
             <div class="cardflow-card" ng-repeat="card in cards" style="background-image: url( {{card.image}} )">

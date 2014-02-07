@@ -21,6 +21,8 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
 
             // currently selected card, can be set with param
             scope.model.current = scope.current || 0;
+
+            scope.$watch('model.current', init );
             
             // internal vars
             var cardWidth, cardEls, positionLimitLeft, positionLimitRight;
@@ -109,7 +111,7 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
                     }
                 }else{
                     // HACK: add active when transcluded elements are available
-                    setTimeout(init, 100);
+                    setTimeout(init, 1);
                 }
             }
 
@@ -132,10 +134,6 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
                     updatePosition(-1);
                 }
             }
-
-            // these work in all modes and are exposed to $scope.model
-            scope.model.left = function(){ updatePosition(1); };
-            scope.model.right = function(){ updatePosition(-1); };
         }
     };
 }]);

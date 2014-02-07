@@ -11,7 +11,8 @@ Here are some more features:
 
 *  mobile-friendly, tested on webkit+firefox
 *  use CSS 3D transformations directly, no `window.requestAnimationFrame()`.
-*  you can use it to make single-card-visible carousels, swipey coverflows, no-swipe coverflows, or whatever
+*  all the look is defined in your own CSS
+*  you can use it to make single-card-visible carousels, swipee coverflows, no-swipe coverflows, or whatever
 *  data-binding & callbacks
 
 See a [demo](http://konsumer.github.io/angular-cardflow/)
@@ -22,7 +23,7 @@ See files in `examples` for usage examples, but here's the basics:
 
 1. Include the cardflow.js script provided by this component into your app.
 2. Add angular-cardflow as a module dependency to your app.
-3. Add CSS to make it look nice. I tried to keep all of the look & animation in CSS only. There is an example in `examples/cardflow.css`
+3. Add CSS to make it look nice. I tried to keep all of the look & animation in CSS only, for maximum configurability. There is an example in `examples/cardflow.css`
 
 ## Attributes
 
@@ -47,9 +48,7 @@ You can set different interaction modes with the `type` attribute. Here are the 
 
 ## model
 
-`model` is used if you need to reach into the directive with data-binding. `examples/index.html` uses this. It's cool for indicators or buttons that jump to specific cards. It gives you access to these:
+`model` is used if you need to reach into the directive with data-binding. It's cool for indicators or buttons that jump to specific cards. It gives you access to these:
 
-*  `current` - the index of the current card
-*  `left()` - trigger moving 1 to the left
-*  `right()` - trigger moving 1 to the right
+*  `current` - the read/writable index of the current card
 *  `onActive`  - called when an active card is selected. It looks like this: `function(active_element, offset, scope){ }`
