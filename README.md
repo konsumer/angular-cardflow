@@ -4,13 +4,14 @@ This is for making ng-repeat items that flow into a nice & efficient coverflow. 
 
 *  It can handle images, divs, or whatever you like that is ng-repeating
 *  Uses Angular's `$swipe`
-*  It has multiple interaction modes.
+*  It has multiple interaction modes
 *  Lots of attribute options with sensible defaults
 
 Here are some more features:
 
-*  Mobile friendly, tested on webkit+firefox
-*  use CSS 3D transformations and requestAnimationFrame.
+*  mobile-friendly, tested on webkit+firefox
+*  use CSS 3D transformations directly, no `window.requestAnimationFrame()`.
+*  you can use it to make single-card-visible carousels, swipey coverflows, no-swipe coverflows, or whatever
 *  data-binding & callbacks
 
 See a [demo](http://konsumer.github.io/angular-cardflow/)
@@ -21,9 +22,21 @@ See files in `examples` for usage examples, but here's the basics:
 
 1. Include the cardflow.js script provided by this component into your app.
 2. Add angular-cardflow as a module dependency to your app.
-3. Add CSS to make it look nice. There is an example in `examples/cardflow.css`
+3. Add CSS to make it look nice. I tried to keep all of the look & animation in CSS only. There is an example in `examples/cardflow.css`
 
 ## Attributes
+
+### current
+
+You can force the current card, if you don't want it to be the first one.
+
+### animTime
+
+You can set the speed that it animates, in seconds. Default is 0.25.
+
+### pad
+
+You can set the margin between cards, in pixles. Default is 10.
 
 ### type
 

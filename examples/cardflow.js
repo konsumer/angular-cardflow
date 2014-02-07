@@ -21,14 +21,9 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
 
             // currently selected card, can be set with param
             scope.model.current = scope.current || 0;
-
-            // width of a card, in pixels
-            scope.cardWidth = 0;
-
-            
             
             // internal vars
-            var cardEls, positionLimitLeft, positionLimitRight;
+            var cardWidth, cardEls, positionLimitLeft, positionLimitRight;
 
             function update(){
                 cardEls.css({
@@ -49,16 +44,16 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
             // update offset snapped to current card
             function updatePosition(delta){
                 positionLimitLeft = cardEls[1].offsetLeft;
-                positionLimitRight = positionLimitLeft + scope.cardWidth * cardEls.length;
+                positionLimitRight = positionLimitLeft + cardWidth * cardEls.length;
 
                 // delta bounds
                 if (delta === 0 || (delta === -1 && scope.model.current > 0) || (delta === 1 && scope.model.current < (cardEls.length-1) ) ){
                     // do I really need to re-calculate this every time?
                     cardEls = element.children().children();
-                    scope.cardWidth = cardEls[1].offsetHeight + scope.pad;
+                    cardWidth = cardEls[1].offsetHeight + scope.pad;
 
                     scope.model.current += delta;
-                    scope.position = -(scope.model.current*scope.cardWidth);
+                    scope.position = -(scope.model.current*cardWidth);
 
                     update();
                 }
@@ -67,76 +62,69 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
             // initialize cardflow
             function init(){
                 cardEls = element.children().children();
-                scope.cardWidth = cardEls[1].offsetHeight + scope.pad;
+                if (cardEls && cardEls.length){
+                    cardWidth = cardEls[1].offsetHeight + scope.pad;
 
-                angular.forEach(cardEls, function(el, i){
-                    angular.element(el).css({ left: (i * scope.cardWidth) + 'px' });
-                });
-
-                updatePosition(0);
-
-                if (scope.type == 'swipeSnap'){
-                    /*
-                    scope.animationLoop = window.requestAnimationFrame(function(){
-                        var position = scope.position + scope.velocity;
-                        if(position >= 0)  { scope.velocity = 0; position = 0; }
-                        if(position <= positionLimitRight) { scope.velocity = 0; position = positionLimitRight; }
-                        scope.position=position;
-
-                        update();
+                    angular.forEach(cardEls, function(el, i){
+                        angular.element(el).css({ left: (i * cardWidth) + 'px' });
                     });
-                    */
 
-                    // calculate card to move to with start/end
-                    // move cards on move (for a grab effect)
-                    var startTime=0;
-                    var startX=0;
+                    updatePosition(0);
 
-                    $swipe.bind(element, {
-                        start: function(coords){
-                            startTime= (new Date()).getTime();
-                            startX = coords.x;
-                        },
-                        end: function(coords){
-                            // figure out pointer velocity, update current to calculated card
-                            // inverted velocity, but getting closer
-                            var current = scope.model.current - Math.floor((scope.cardWidth / (coords.x - startX)) * ((new Date()).getTime()-startTime)/(scope.animTime*500));
+                    if (scope.type == 'swipeSnap'){
+                        // calculate card to move to with start/end
+                        // move cards on move (for a grab effect)
+                        var startTime=0;
+                        var startX=0;
 
-                            console.log(current);
+                        $swipe.bind(element, {
+                            start: function(coords){
+                                startTime= (new Date()).getTime();
+                                startX = coords.x;
+                            },
+                            end: function(coords){
+                                // figure out pointer velocity, update current to calculated card
+                                // inverted velocity, but getting closer
+                                // scale target to velocity of pointer
+                                var current = scope.model.current - Math.floor((cardWidth / (coords.x - startX)) / (scope.animTime / (new Date()).getTime()-startTime));
 
-                            // update current
-                            if (current <0){ current=0; }
-                            if (current > (cardEls.length-1)){ current=(cardEls.length-1); }
-                            scope.model.current = current;
+                                console.log(current);
 
-                            scope.$apply();
-                            updatePosition(0);
-                        },
-                        /*
-                        move: function(coords){
-                            // update position to match pointer
-                            scope.position = (scope.model.current*scope.cardWidth) - coords.x;
-                            cardEls.css({
-                                'transform': 'translate3d('+scope.position+'px,0,0)',
-                                '-webkit-transform': 'translate3d('+scope.position+'px,0,0)',
-                                '-o-transform': 'translate3d('+scope.position+'px,0,0)',
-                                '-moz-transform': 'translate3d('+scope.position+'px,0,0)'
-                            });
-                            // snap to current
-                            setTimeout(function(){
-                                console.log('snap to active');
+                                // update current
+                                if (current <0){ current=0; }
+                                if (current > (cardEls.length-1)){ current=(cardEls.length-1); }
+                                scope.model.current = current;
+
+                                scope.$apply();
                                 updatePosition(0);
-                            }, scope.animTime*1000);
-                        }
-                        */
-                    });
+                            },
+                            /*
+                            move: function(coords){
+                                // update position to match pointer
+                                scope.position = (scope.model.current*cardWidth) - coords.x;
+                                cardEls.css({
+                                    'transform': 'translate3d('+scope.position+'px,0,0)',
+                                    '-webkit-transform': 'translate3d('+scope.position+'px,0,0)',
+                                    '-o-transform': 'translate3d('+scope.position+'px,0,0)',
+                                    '-moz-transform': 'translate3d('+scope.position+'px,0,0)'
+                                });
+                                // snap to current
+                                setTimeout(function(){
+                                    console.log('snap to active');
+                                    updatePosition(0);
+                                }, scope.animTime*1000);
+                            }
+                            */
+                        });
+                    }
+                }else{
+                    // HACK: add active when transcluded elements are available
+                    setTimeout(init, 100);
                 }
-
-                
             }
 
-            // HACK: add active when transcluded elements are available
-            setTimeout(init, 10);
+            // re-init if anim type changes
+            scope.$watch('type', init);
 
             // on window resize, update translate
             angular.element($window).bind('resize',function(){
