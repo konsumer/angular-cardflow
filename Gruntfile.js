@@ -10,15 +10,28 @@ module.exports = function(grunt) {
 		'copy': {
 			'page':{
 				'files':[
-					{expand: true, flatten: true, filter: 'isFile', src: ['examples/**'], dest: '.grunt/temp/'},
+					{'expand': true, 'flatten': true, 'filter': 'isFile', 'src': ['examples/**'], 'dest': '.grunt/temp/'},
+					{'src': ['cardflow.js'], 'dest': '.grunt/temp/'},
 				]
 			}
+		},
+		'clean': {
+			'page': ['.grunt/temp/'],
 		},
 		'uglify': {
 			'page': {
 				'files': {
 					'.grunt/temp/cardflow.min.js': ['cardflow.js']
 				}
+			}
+		},
+		'cssmin': {
+			'page': {
+				'expand': true,
+				'cwd': '.grunt/temp/',
+				'src': ['*.css', '!*.min.css'],
+				'dest': '.grunt/temp/',
+				'ext': '.min.css'
 			}
 		},
 		'connect': {
@@ -42,10 +55,10 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-copy');
+	grunt.loadNpmTasks('grunt-contrib-cssmin');
+	grunt.loadNpmTasks('grunt-contrib-clean');
 
-	grunt.registerTask('page', 'Publish examples to github pages', ['copy:page', 'uglify:page', 'gh-pages']);
 	grunt.registerTask('server', 'Run local static webserver for examples', ['connect']);
-	grunt.registerTask('serve', ['connect:server']);
-	grunt.registerTask('default', ['page']);
+	grunt.registerTask('default', 'Publish examples with minified source to github pages', ['clean:page', 'copy:page', 'cssmin:page', 'uglify:page', 'gh-pages']);
 
 };
