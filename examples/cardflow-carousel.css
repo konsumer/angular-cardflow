@@ -1,13 +1,13 @@
 /* operate more like a single-image carousel */
 
-.gallery {
+.cardflow-carousel {
     border: 1px solid #fff;
     position:relative;
      width: 400px;
     height: 400px;
 }
 
-.cardflow-container {
+.cardflow-carousel .cardflow-container {
     overflow: hidden;
     position:relative;
     display: block;
@@ -26,7 +26,7 @@
     cursor: pointer;
 }
 
-.cardflow-card{
+.cardflow-carousel .cardflow-card{
     position: absolute;
 
     width: 400px;
@@ -53,12 +53,12 @@
     opacity:0;
 }
 
-.cardflow-card.cardflow-active {
+.cardflow-carousel .cardflow-card.cardflow-active {
     /* this makes fade-in work */
     opacity:1;
 }
 
-.indicators {
+.cardflow-carousel .indicators {
     position:absolute;
     background-color: #000;
     background-color: rgba(0, 0, 0, 0.6);
@@ -72,11 +72,11 @@
     -o-transition: opacity 0.5s ease-out;
 }
 
-.gallery:hover .indicators{
+.cardflow-carousel:hover .indicators{
     opacity:1;
 }
 
-.indicator {
+.cardflow-carousel .indicator {
     background-color: #000;
     background-color: rgba(10, 10, 10, 0.6);
     -webkit-transition: color 0.5s ease-out;
@@ -91,7 +91,7 @@
     margin:2px;
 }
 
-.indicator.active {
+.cardflow-carousel .indicator.active {
     background-color: #fff;
     background-color: rgba(255, 255, 255, 0.6);
 }
