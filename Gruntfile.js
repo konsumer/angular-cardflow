@@ -20,7 +20,7 @@ module.exports = function(grunt) {
 					'.grunt/temp/cardflow.min.js': ['cardflow.js']
 				}
 			}
-		}
+		},
 		'connect': {
 			'server': {
 				'options': {
