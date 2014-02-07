@@ -1,0 +1,67 @@
+/* operate more like a single-image carousel */
+
+.cardflow-container {
+    overflow: hidden;
+    position:relative;
+    display: block;
+
+    width: 400px;
+    height: 400px;
+
+    /* disable text selection */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    cursor: pointer;
+
+    border: 1px solid #fff;
+}
+
+.cardflow-card{
+    position: absolute;
+
+    width: 400px;
+    height: 400px;
+
+    text-shadow: 2px 4px 3px rgba(0,0,0,0.3);
+    text-align: center;
+    line-height:400px;
+    background: #000;
+    background-size:cover;
+
+    -webkit-transition: all 0.25s ease-out;
+    -moz-transition: all 0.25s ease-out;
+    -o-transition: all 0.25s ease-out;
+    transition: all 0.25s ease-out;
+    
+    -webkit-transform: translate3d(0,0,0);
+    transform: translate3d(0,0,0);
+    -o-transform: translate3d(0,0,0);
+    -moz-transform: translate3d(0,0,0);
+    z-index:1;
+
+    /* this makes fade-in work */
+    opacity:0;
+}
+
+.cardflow-card.cardflow-active {
+    /* this makes fade-in work */
+    opacity:1;
+}
+
+.indicator {
+    width: 9px;
+    height: 9px;
+    background: #fff;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 1px;
+}
+
+.indicator.active {
+    background: #666;
+}

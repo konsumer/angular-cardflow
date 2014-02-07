@@ -72,8 +72,7 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
                     updatePosition(0);
 
                     if (scope.atype == 'swipeSnap'){
-                        // calculate card to move to with start/end
-                        // move cards on move (for a grab effect)
+                        // calculate current card with start/end
                         var startTime=0;
                         var startX=0;
 
@@ -86,11 +85,16 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
                                 // figure out pointer velocity, update current to calculated card
                                 // inverted velocity, but getting closer
                                 // scale target to velocity of pointer
-                                var current = scope.model.current - Math.floor((cardWidth / (coords.x - startX)) / (scope.animTime / (new Date()).getTime()-startTime));
+                                var realDistance = coords.x - startX;
+                                var distance = Math.abs(realDistance);
+                                var now = (new Date()).getTime();
+                                var velocity = (now-startTime)/(scope.animTime * 100000);
+                                velocity = distance * velocity;
+                                var direction = realDistance > 0 ? -1 : 1;
+                                console.log(velocity, direction);
+                                var current = scope.model.current + Math.floor(velocity * direction);
 
-                                console.log(current);
-
-                                // update current
+                                // check bounds
                                 if (current <0){ current=0; }
                                 if (current > (cardEls.length-1)){ current=(cardEls.length-1); }
                                 scope.model.current = current;
@@ -98,23 +102,9 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
                                 scope.$apply();
                                 updatePosition(0);
                             },
-                            /*
+                            // move cards on move (for a grab effect)
                             move: function(coords){
-                                // update position to match pointer
-                                scope.position = (scope.model.current*cardWidth) - coords.x;
-                                cardEls.css({
-                                    'transform': 'translate3d('+scope.position+'px,0,0)',
-                                    '-webkit-transform': 'translate3d('+scope.position+'px,0,0)',
-                                    '-o-transform': 'translate3d('+scope.position+'px,0,0)',
-                                    '-moz-transform': 'translate3d('+scope.position+'px,0,0)'
-                                });
-                                // snap to current
-                                setTimeout(function(){
-                                    console.log('snap to active');
-                                    updatePosition(0);
-                                }, scope.animTime*1000);
                             }
-                            */
                         });
                     }
                 }else{
@@ -130,8 +120,6 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
             angular.element($window).bind('resize',function(){
                 updatePosition(0);
             });
-
-            console.log(scope.atype);
 
             scope.swipeLeft = function(){
                 if (scope.atype == 'swipeSnapOne'){
