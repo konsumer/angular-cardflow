@@ -11,6 +11,9 @@ body{
 	margin:0;
 	padding:0;
 	overflow:hidden;
+}
+
+body, a, a:link, a:active, a:visited {
 	color: white;
 }
 
@@ -18,5 +21,4 @@ body{
 	position:absolute;
 	right:10px;
 	top: 10px;
-	color: white;
 }
