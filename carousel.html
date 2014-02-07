@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="angular-cardflow-example">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="user-scalable=0, initial-scale=1.0">
+        <title>Carousel Cardflow</title>
+        <link href="demo.css" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.11/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.11/angular-touch.min.js"></script>
+        <script src="http://konsumer.github.io/angular-cardflow/cardflow.min.js"></script>
+        <link href="http://konsumer.github.io/angular-cardflow/cardflow.carousel.css" rel="stylesheet">
+    </head>
+
+    <body ng-controller="example-controller">
+        <a id="github" href="https://github.com/konsumer/angular-cardflow">view on github</a>
+        <h1>Carousel Cardflow</h1>
+        <p>This is sort of like <a href="https://github.com/revolunet/angular-carousel">angular-carousel</a></p>
+        <p>Swipe left or right to advance 1 card. Hover to see indicators. Click on indicators to jump to a specific card. <a href="index.html">Here</a> is a more scrollee example. <a href="simple.html">Here</a> is a simple example.</p>
+
+        <div class="gallery">
+
+            <cardflow atype="swipeSnapOne" margin="1" model="cardflow">
+                <div class="cardflow-card" ng-repeat="card in cards" style="background-image: url( {{card.image}} )">
+                    {{ card.title }}
+                </div>
+            </cardflow>
+
+            <!-- make an indicator with regular angular stuff! -->
+            <div class="indicators">
+                <div class="indicator" ng-click="cardflow.current=$index" ng-repeat="card in cards" ng-class="{ active: cardflow.current == $index }">
+            </div>
+
+        </div>
+
+    </body>
+
+    <script>
+    // Example controller
+    angular.module('angular-cardflow-example', ['angular-cardflow'])
+        .controller('example-controller', function($scope){
+            // model to hold info about cardflow
+            $scope.cardflow={};
+            
+            // generate 40 cards
+            $scope.cards = [];
+            var types = ['cats','fashion','nature','food','abstract','nightlife'];
+            for (var i=0; i<40; i++){
+                var t = types[i % types.length];
+                $scope.cards.push({image:'http://lorempixel.com/400/400/' + t + '/'+((i%10)+1), title: t});
+            }
+        });
+    </script>
+</html>

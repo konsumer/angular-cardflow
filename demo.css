@@ -1,0 +1,24 @@
+/*
+
+just to make demos look nice. See cardfolow.css for example of an actual cardflow
+
+*/
+body{
+	font-family: sans-serif;
+	background: black;
+	width: 100%;
+	height: 100%;
+	margin:0;
+	padding:10px;
+	overflow:hidden;
+}
+
+body, a, a:link, a:active, a:visited {
+	color: white;
+}
+
+#github{
+	position:absolute;
+	right:10px;
+	top: 10px;
+}
