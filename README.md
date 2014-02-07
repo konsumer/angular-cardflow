@@ -47,7 +47,7 @@ You can set different interaction modes with the `type` attribute. Here are the 
 
 ## model
 
-`model` is used if you need to reach into the directive with data-binding. `examples/index.html` uses this. It gives you access to these:
+`model` is used if you need to reach into the directive with data-binding. `examples/index.html` uses this. It's cool for indicators or buttons that jump to specific cards. It gives you access to these:
 
 *  `current` - the index of the current card
 *  `left()` - trigger moving 1 to the left
