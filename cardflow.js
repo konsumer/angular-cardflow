@@ -25,7 +25,7 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
             scope.$watch('model.current', init );
             
             // internal vars
-            var cardWidth, cardEls, positionLimitLeft, positionLimitRight;
+            var cardWidth, cardEls, positionLimitLeft, positionLimitRight, bound;
 
             // update position
             function setPosition(position){
@@ -74,63 +74,51 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
 
                     update(0);
 
+                    // store transition
+                    var transition={};
+                    var t = window.getComputedStyle(cardEls[1])['transition'];
+                    if (t){
+                        transition.transition = t + '';
+                    }
+                    angular.forEach(['moz','o','webkit'], function(p){
+                        t = window.getComputedStyle(cardEls[1])['transition'];
+                        if (t){
+                            transition[p+'Transition'] = t;
+                        }
+                    });
+
                     if (scope.atype == 'swipeSnap'){
                         // calculate current card with start/end
                         var startTime=0;
                         var startX=0;
                         var transition;
+                        var position;
 
-                        console.log(window.getComputedStyle(cardEls[1]))
+                        // only bind once
+                        if (!bound){
+                            bound=true;
+                            $swipe.bind(element, {
+                                start: function(coords){
+                                    startTime= (new Date()).getTime();
+                                    startX = coords.x;
 
-                        $swipe.bind(element, {
-                            start: function(coords){
-                                startTime= (new Date()).getTime();
-                                startX = coords.x;
-                                
-                                // store & unset transition
-                                transition = {
-                                    'webkitTransition': window.getComputedStyle(cardEls[1])['transitionTransform'],
-                                };
-                                /*
-                                cardEls.css({
-                                    'transition': 'none',
-                                    '-webkit-transition': 'none',
-                                    '-o-transition': 'none',
-                                    '-moz-transition': 'none'
-                                })
-*/
-                            },
-                            end: function(coords){
-                                // restore transition
-                                //cardEls.css(transition);
-                                //console.log(transition)
-                                /*
-                                // figure out pointer velocity, update current to calculated card
-                                // inverted velocity, but getting closer
-                                // scale target to velocity of pointer
-                                var realDistance = coords.x - startX;
-                                var distance = Math.abs(realDistance);
-                                var now = (new Date()).getTime();
-                                var velocity = (now-startTime)/(scope.animTime * 100000);
-                                velocity = distance * velocity;
-                                var direction = realDistance > 0 ? -1 : 1;
-                                console.log(velocity, direction);
-                                var current = scope.model.current + Math.floor(velocity * direction);
-
-                                // check bounds
-                                if (current <0){ current=0; }
-                                if (current > (cardEls.length-1)){ current=(cardEls.length-1); }
-                                scope.model.current = current;
-
-                                scope.$apply();
-                                update(0);
-                                */
-                            },
-                            // move cards on move (for a grab effect)
-                            move: function(coords){
-                                setPosition(scope.position+coords.x-positionLimitLeft);
-                            }
-                        });
+                                    // disable transition
+                                    angular.forEach(['moz','o','webkit'], function(p){
+                                        cardEls.css(p+'Transition', 'none');
+                                    });
+                                    cardEls.css({'transition':'none'});
+                                },
+                                end: function(coords){
+                                    // restore transition
+                                    cardEls.css(transition);                                 
+                                },
+                                // move cards on move (for a grab effect)
+                                move: function(coords){
+                                    position = scope.position+coords.x-positionLimitLeft+scope.margin;
+                                    setPosition(position);
+                                }
+                            });
+                        }
                     }
                 }else{
                     // HACK: add active when transcluded elements are available

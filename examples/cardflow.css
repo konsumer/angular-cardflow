@@ -53,11 +53,10 @@
 
     margin-left: 50%; /* center cards to parent. first card is active, in the middle */
 
-    -webkit-transition: transform 0.25s ease-out;
-    -moz-transition: transform 0.25s ease-out;
-    -o-transition: transform 0.25s ease-out;
-    transition: transform 0.25s ease-out;
-    
+    -webkit-transition: all 0.25s ease-out;
+    -moz-transition: all 0.25s ease-out;
+    -o-transition: all 0.25s ease-out;
+    transition: all 0.25s ease-out;
     z-index:1;
 }
 
