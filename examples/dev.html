@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="angular-cardflow-example">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="user-scalable=0, initial-scale=1.0">
+        <title>Cardflow</title>
+        <link href="demo.css" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.11/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.11/angular-touch.min.js"></script>
+        <script src="../cardflow.js"></script>
+        <link href="cardflow.css" rel="stylesheet">
+    </head>
+
+    <body ng-controller="example-controller">
+
+        <h1>Dev Version</h1>
+        <p>This uses non-CDN'd, un-minified local files. I use it while developing.</p>
+
+        <cardflow model="cardflow">
+            <div class="cardflow-card" ng-repeat="card in cards" style="background-image: url( {{card.image}} )">
+                {{ card.title }}
+            </div>
+        </cardflow>
+
+        <button ng-click="cardflow.current=cardflow.current-1" ng-disabled="cardflow.current <= 0">&lt;</button> {{ cardflow.current+1 }} / {{ cards.length }}
+        <button ng-click="cardflow.current=cardflow.current+1"  ng-disabled="cardflow.current >= (cards.length-1)">&gt;</button>
+
+    </body>
+
+    <script>
+    angular.module('angular-cardflow-example', ['angular-cardflow'])
+        .controller('example-controller', function($scope){
+            $scope.cardflow = {};
+
+            // generate 40 cards
+            $scope.cards = [];
+            var types = ['cats','fashion','nature','food','abstract','nightlife'];
+            for (var i=0; i<40; i++){
+                var t = types[i % types.length];
+                $scope.cards.push({image:'http://lorempixel.com/200/200/' + t + '/'+((i%10)+1), title: t});
+            }
+        });
+    </script>
+</html>

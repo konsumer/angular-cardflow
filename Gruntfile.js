@@ -33,16 +33,6 @@ module.exports = function(grunt) {
 				'dest': '.grunt/temp/',
 				'ext': '.min.css'
 			}
-		},
-		'connect': {
-			'server': {
-				'options': {
-					'port': 9001,
-					'hostname': '*',
-        			'base': 'examples',
-        			'keepalive':true
-				},
-			},
 		}
 	});
 
@@ -52,13 +42,11 @@ module.exports = function(grunt) {
 	// push to gh-pages
 
 	grunt.loadNpmTasks('grunt-gh-pages');
-	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-contrib-clean');
-
-	grunt.registerTask('server', 'Run local static webserver for examples', ['connect']);
+	
 	grunt.registerTask('default', 'Publish examples with minified source to github pages', ['clean:page', 'copy:page', 'cssmin:page', 'uglify:page', 'gh-pages']);
 
 };

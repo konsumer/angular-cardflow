@@ -39,9 +39,9 @@ You can set the speed that it animates, in seconds. Default is 0.25.
 
 You can set the margin between cards, in pixels. Default is 10.
 
-### type
+### atype
 
-You can set different interaction modes with the `type` attribute. Here are the available options:
+You can set different interaction modes with the `atype` attribute. Here are the available options:
 
 * `swipeSnap` (default) - swipe left or right, watch velocity & snap to individual card on slow down. sort of like [angular-coverflow](https://github.com/southdesign/angular-coverflow), but snap to cards.
 * `swipeSnapOne` - swipe left or right to advance 1. sort of like [angular-carousel](https://github.com/revolunet/angular-carousel).
