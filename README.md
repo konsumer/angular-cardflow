@@ -34,7 +34,7 @@ You can force the current card, if you don't want it to be the first one.
 
 You can set the speed that it animates, in seconds. Default is 0.25.
 
-### pad
+### margin
 
 You can set the margin between cards, in pixels. Default is 10.
 

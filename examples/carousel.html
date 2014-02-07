@@ -19,7 +19,7 @@
 
         <div>{{ cardflow.current+1 }} / {{ cards.length }}</div>
 
-        <cardflow atype="swipeSnapOne" pad="0" model="cardflow">
+        <cardflow atype="swipeSnapOne" margin="1" model="cardflow">
             <div class="cardflow-card" ng-repeat="card in cards" style="background-image: url( {{card.image}} )">
                 {{ card.title }}
             </div>

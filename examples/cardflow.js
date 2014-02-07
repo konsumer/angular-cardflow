@@ -5,7 +5,7 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
         'restrict': 'E',
         'template':'<div class="cardflow-container" ng-transclude ng-swipe-left="swipeLeft()" ng-swipe-right="swipeRight()"></div>',
         transclude: true,
-        'scope': { 'model':'=?', 'atype':'=?', 'pad':'=?', 'animTime':'=?', 'current':'=?' },
+        'scope': { 'model':'=?', 'atype':'=?', 'margin':'=?', 'animTime':'=?', 'current':'=?' },
         'link': function(scope, element, attrs) {
             // model for reaching into this for callbacks and data-binding
             scope.model = scope.model ||  {};
@@ -14,7 +14,7 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
             scope.atype = attrs.atype || 'swipeSnap';
 
             // margin for cards
-            scope.pad = scope.pad || 10;
+            scope.margin = scope.margin  || 10;
             
             //  time that it takes to animate a movemnt in CSS transition 
             scope.animTime = scope.animTime || 0.25;
@@ -50,7 +50,7 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
                 if (delta === 0 || (delta === -1 && scope.model.current > 0) || (delta === 1 && scope.model.current < (cardEls.length-1) ) ){
                     // do I really need to re-calculate this every time?
                     cardEls = element.children().children();
-                    cardWidth = cardEls[1].offsetHeight + scope.pad;
+                    cardWidth = cardEls[1].offsetHeight + scope.margin;
 
                     scope.model.current += delta;
                     scope.position = -(scope.model.current*cardWidth);
@@ -63,7 +63,7 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
             function init(){
                 cardEls = element.children().children();
                 if (cardEls && cardEls.length){
-                    cardWidth = cardEls[1].offsetHeight + scope.pad;
+                    cardWidth = cardEls[1].offsetHeight + scope.margin;
 
                     angular.forEach(cardEls, function(el, i){
                         angular.element(el).css({ left: (i * cardWidth) + 'px' });
@@ -123,14 +123,12 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
 
             scope.swipeLeft = function(){
                 if (scope.atype == 'swipeSnapOne'){
-                    console.log('left');
                     updatePosition(1);
                 }
             }
 
             scope.swipeRight = function(){
                 if (scope.atype == 'swipeSnapOne'){
-                    console.log('right');
                     updatePosition(-1);
                 }
             }
