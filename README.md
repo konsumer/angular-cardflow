@@ -36,7 +36,7 @@ You can set the speed that it animates, in seconds. Default is 0.25.
 
 ### pad
 
-You can set the margin between cards, in pixles. Default is 10.
+You can set the margin between cards, in pixels. Default is 10.
 
 ### type
 
