@@ -5,77 +5,159 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
         'restrict': 'E',
         'template':'<div class="cardflow-container" ng-transclude ng-swipe-left="swipeLeft()" ng-swipe-right="swipeRight()"></div>',
         transclude: true,
-        'scope': { 'model':'=?', 'type':'=?', 'pad':'=?' },
+        'scope': { 'model':'=?', 'type':'=?', 'pad':'=?', 'animTime':'=?', 'current':'=?' },
         'link': function(scope, element, attrs) {
+            // model for reaching into this for callbacks and data-binding
             scope.model = scope.model ||  {};
+            
+            // swipeSnap or swipeSnapOne
             scope.type = scope.type || 'swipeSnap';
+
+            // margin for cards
             scope.pad = scope.pad || 10;
             
-            scope.model.current = 0;
+            //  time that it takes to animate a movemnt in CSS transition 
+            scope.animTime = scope.animTime || 0.25;
 
-            // update offset
-            function update(delta){
-                // delta bounds
-                if (delta === 0 || (delta === -1 && scope.model.current > 0) || (delta === 1 && scope.model.current < (scope.cardEls.length-1) ) ){
-                    
-                    // do I really need to re-calculate this every time?
-                    // there must be a better way...
-                    scope.cardEls = element.children().children();
-                    scope.cardWidth = scope.cardEls[1].offsetHeight + scope.pad;
+            // currently selected card, can be set with param
+            scope.model.current = scope.current || 0;
 
-                    scope.model.current += delta;
-                    var px = scope.model.current*scope.cardWidth*-1;
+            // width of a card, in pixels
+            scope.cardWidth = 0;
 
-                    scope.cardEls.css({
-                        'transform': 'translate3d('+px+'px,0,0)',
-                        '-webkit-transform': 'translate3d('+px+'px,0,0)',
-                        '-o-transform': 'translate3d('+px+'px,0,0)',
-                        '-moz-transform': 'translate3d('+px+'px,0,0)'
-                    }).removeClass('cardflow-active');
-                    
-                    var active = angular.element(scope.cardEls[scope.model.current]);
-                    active.addClass('cardflow-active');
-                    if (scope.model.onActive){
-                        scope.model.onActive(active, px, scope);
-                    }
+            
+            
+            // internal vars
+            var cardEls, positionLimitLeft, positionLimitRight;
+
+            function update(){
+                cardEls.css({
+                    'transform': 'translate3d('+scope.position+'px,0,0)',
+                    '-webkit-transform': 'translate3d('+scope.position+'px,0,0)',
+                    '-o-transform': 'translate3d('+scope.position+'px,0,0)',
+                    '-moz-transform': 'translate3d('+scope.position+'px,0,0)'
+                });
+
+                cardEls.removeClass('cardflow-active');
+                var active = angular.element(cardEls[scope.model.current]);
+                active.addClass('cardflow-active');
+                if (scope.model.onActive){
+                    scope.model.onActive(active, scope.position, scope);
                 }
             }
 
-            // ugly hack to add active when transcluded elements are available
-            setTimeout(function(){
-                scope.cardEls = element.children().children();
-                scope.cardWidth = scope.cardEls[1].offsetHeight + scope.pad;
+            // update offset snapped to current card
+            function updatePosition(delta){
+                positionLimitLeft = cardEls[1].offsetLeft;
+                positionLimitRight = positionLimitLeft + scope.cardWidth * cardEls.length;
 
-                angular.forEach(scope.cardEls, function(el, i){
+                // delta bounds
+                if (delta === 0 || (delta === -1 && scope.model.current > 0) || (delta === 1 && scope.model.current < (cardEls.length-1) ) ){
+                    // do I really need to re-calculate this every time?
+                    cardEls = element.children().children();
+                    scope.cardWidth = cardEls[1].offsetHeight + scope.pad;
+
+                    scope.model.current += delta;
+                    scope.position = -(scope.model.current*scope.cardWidth);
+
+                    update();
+                }
+            }
+
+            // initialize cardflow
+            function init(){
+                cardEls = element.children().children();
+                scope.cardWidth = cardEls[1].offsetHeight + scope.pad;
+
+                angular.forEach(cardEls, function(el, i){
                     angular.element(el).css({ left: (i * scope.cardWidth) + 'px' });
                 });
 
-                update(0);
+                updatePosition(0);
 
                 if (scope.type == 'swipeSnap'){
+                    /*
+                    scope.animationLoop = window.requestAnimationFrame(function(){
+                        var position = scope.position + scope.velocity;
+                        if(position >= 0)  { scope.velocity = 0; position = 0; }
+                        if(position <= positionLimitRight) { scope.velocity = 0; position = positionLimitRight; }
+                        scope.position=position;
 
+                        update();
+                    });
+                    */
+
+                    // calculate card to move to with start/end
+                    // move cards on move (for a grab effect)
+                    var startTime=0;
+                    var startX=0;
+
+                    $swipe.bind(element, {
+                        start: function(coords){
+                            startTime= (new Date()).getTime();
+                            startX = coords.x;
+                        },
+                        end: function(coords){
+                            // figure out pointer velocity, update current to calculated card
+                            // inverted velocity, but getting closer
+                            var current = scope.model.current - Math.floor((scope.cardWidth / (coords.x - startX)) * ((new Date()).getTime()-startTime)/(scope.animTime*500));
+
+                            console.log(current);
+
+                            // update current
+                            if (current <0){ current=0; }
+                            if (current > (cardEls.length-1)){ current=(cardEls.length-1); }
+                            scope.model.current = current;
+
+                            scope.$apply();
+                            updatePosition(0);
+                        },
+                        /*
+                        move: function(coords){
+                            // update position to match pointer
+                            scope.position = (scope.model.current*scope.cardWidth) - coords.x;
+                            cardEls.css({
+                                'transform': 'translate3d('+scope.position+'px,0,0)',
+                                '-webkit-transform': 'translate3d('+scope.position+'px,0,0)',
+                                '-o-transform': 'translate3d('+scope.position+'px,0,0)',
+                                '-moz-transform': 'translate3d('+scope.position+'px,0,0)'
+                            });
+                            // snap to current
+                            setTimeout(function(){
+                                console.log('snap to active');
+                                updatePosition(0);
+                            }, scope.animTime*1000);
+                        }
+                        */
+                    });
                 }
-            }, 10);
+
+                
+            }
+
+            // HACK: add active when transcluded elements are available
+            setTimeout(init, 10);
 
             // on window resize, update translate
             angular.element($window).bind('resize',function(){
-                update(0);
+                updatePosition(0);
             });
 
             scope.swipeLeft = function(){
                 if (scope.type == 'swipeSnapOne'){
-                    update(1);
+                    updatePosition(1);
                 }
             }
 
             scope.swipeRight = function(){
                 if (scope.type == 'swipeSnapOne'){
-                    update(-1);
+                    updatePosition(-1);
                 }
             }
 
-            scope.model.left = function(){ update(1); };
-            scope.model.right = function(){ update(-1); };
+            // these work in all modes and are exposed to $scope.model
+            scope.model.left = function(){ updatePosition(1); };
+            scope.model.right = function(){ updatePosition(-1); };
         }
     };
 }]);
