@@ -1,5 +1,12 @@
 /* operate more like a single-image carousel */
 
+.gallery {
+    border: 1px solid #fff;
+    position:relative;
+     width: 400px;
+    height: 400px;
+}
+
 .cardflow-container {
     overflow: hidden;
     position:relative;
@@ -17,8 +24,6 @@
     user-select: none;
 
     cursor: pointer;
-
-    border: 1px solid #fff;
 }
 
 .cardflow-card{
@@ -53,15 +58,40 @@
     opacity:1;
 }
 
+.indicators {
+    position:absolute;
+    background-color: #000;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 100;
+    bottom:0;
+    left:0;
+    opacity:0;
+    -webkit-transition: opacity 0.5s ease-out;
+    transition: opacity 0.5s ease-out;
+    -moz-transition: opacity 0.5s ease-out;
+    -o-transition: opacity 0.5s ease-out;
+}
+
+.gallery:hover .indicators{
+    opacity:1;
+}
+
 .indicator {
-    width: 9px;
-    height: 9px;
-    background: #fff;
+    background-color: #000;
+    background-color: rgba(10, 10, 10, 0.6);
+    -webkit-transition: color 0.5s ease-out;
+    transition: color 0.5s ease-out;
+    -moz-transition: color 0.5s ease-out;
+    -o-transition: color 0.5s ease-out;
+    cursor: pointer;
+    width: 6px;
+    height: 6px;
+    display:inline-block;
     border-radius: 50%;
-    display: inline-block;
-    margin-right: 1px;
+    margin:2px;
 }
 
 .indicator.active {
-    background: #666;
+    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.6);
 }

@@ -1,7 +1,7 @@
 {
   "name": "angular-cardflow",
   "version": "0.0.1",
-  "main": "examples/cardflow.js",
+  "main": "cardflow.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/konsumer/angular-cardflow"
