@@ -11,7 +11,7 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
             scope.model = scope.model ||  {};
             
             // swipeSnap or swipeSnapOne
-            scope.type = scope.type || 'swipeSnap';
+            scope.type =attrs.type || 'swipeSnap';
 
             // margin for cards
             scope.pad = scope.pad || 10;
@@ -131,14 +131,18 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
                 updatePosition(0);
             });
 
+            console.log(scope.type);
+
             scope.swipeLeft = function(){
                 if (scope.type == 'swipeSnapOne'){
+                    console.log('left');
                     updatePosition(1);
                 }
             }
 
             scope.swipeRight = function(){
                 if (scope.type == 'swipeSnapOne'){
+                    console.log('right');
                     updatePosition(-1);
                 }
             }
