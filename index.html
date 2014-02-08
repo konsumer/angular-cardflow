@@ -59,12 +59,14 @@
         .controller('example-controller', function($scope){
             // when an item is active, scale it as well as moving it
             function activeBig(active_element, offset, scope){
-                active_element.css({
-                    'transform': 'translate3d('+offset+'px,0,0) scale(1.2)',
-                    '-webkit-transform': 'translate3d('+offset+'px,0,0) scale(1.2)',
-                    '-o-transform': 'translate3d('+offset+'px,0,0) scale(1.2)',
-                    '-moz-transform': 'translate3d('+offset+'px,0,0) scale(1.2)'
-                });
+                if (window.clientWidth >= 480){
+                    active_element.css({
+                        'transform': 'translate3d('+offset+'px,0,0) scale(1.2)',
+                        '-webkit-transform': 'translate3d('+offset+'px,0,0) scale(1.2)',
+                        '-o-transform': 'translate3d('+offset+'px,0,0) scale(1.2)',
+                        '-moz-transform': 'translate3d('+offset+'px,0,0) scale(1.2)'
+                    });
+                }
             }
 
             $scope.cswipeSnap = {onActive:activeBig};
