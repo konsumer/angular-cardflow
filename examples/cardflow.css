@@ -105,7 +105,7 @@
 
 /* set to single-image style on small screens*/
 
-@media (max-width: 200px) {
+@media (max-width: 400px) {
     .cardflow-container, .cardflow-card {
         width: 100vw;
         height: 100vw;
