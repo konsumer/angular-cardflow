@@ -86,8 +86,14 @@
         -moz-box-shadow:    none;
         -webkit-box-shadow: none;
         box-shadow:         none;
-
         -webkit-box-reflect: none;
+    }
+
+    .cardflow-card{
+        border: 1px solid #000;
+    }
+    .cardflow-card.cardflow-active  {
+        border: 1px solid #fff;
     }
 
     .cardflow-container {
