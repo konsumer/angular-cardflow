@@ -51,7 +51,7 @@
     background: #000;
     background-size:cover;
 
-    margin-left: 50%; /* center cards to parent. first card is active, in the middle */
+    margin-left: 45%; /* center cards to parent. first card is active, in the middle */
 
     -webkit-transition: all 0.25s ease-out;
     -moz-transition: all 0.25s ease-out;

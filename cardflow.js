@@ -11,7 +11,7 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
             scope.model = scope.model ||  {};
             
             // swipeSnap or swipeSnapOne
-            scope.atype = attrs.atype || 'swipeSnap';
+            scope.atype = attrs.atype || 'swipeSnapKinetic';
 
             // margin for cards
             scope.margin = scope.margin  || 10;
