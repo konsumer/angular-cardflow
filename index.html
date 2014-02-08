@@ -62,7 +62,7 @@
         .controller('example-controller', function($scope){
             // check performance and disable cool stuff if it's low
             var fps=0, oldTime=(new Date()).getTime();
-            requestAnimFrame(function(){
+            requestAnimationFrame(function(){
                 fps = 1/(((new Date()).getTime() - oldTime)/1000);
 
             });
