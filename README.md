@@ -30,10 +30,6 @@ See files in `examples` for usage examples, but here's the basics:
 
 You can force the current card, if you don't want it to be the first one.
 
-### animTime
-
-You can set the speed that it animates, in seconds. Default is 0.25.
-
 ### margin
 
 You can set the margin between cards, in pixels. Default is 10.
