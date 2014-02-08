@@ -8,6 +8,7 @@
     width: 100%;
     height: 340px;
     padding-top: 80px;
+    background-color: #000;
     background-image: -webkit-gradient(
         linear,
         left bottom,
@@ -86,7 +87,7 @@
     }
 
     .cardflow-container {
-        background-color: #000;
+        background-image: none;
     }
 }
 
