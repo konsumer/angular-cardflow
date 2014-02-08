@@ -22,7 +22,7 @@ See files in `examples` for usage examples, but here's the basics:
 
 1. Include the cardflow.js script provided by this component into your app. (if you are using bower, type `bower install angular-cardflow`)
 2. Add angular-cardflow as a module dependency to your app.
-3. Add CSS to make it look nice. I tried to keep all of the look & animation in CSS only, for maximum configurability. There is an example in `examples/cardflow.css`
+3. Add CSS to make it look nice. I tried to keep all of the look & animation in CSS only, for maximum configurability. There is an example in `examples/cardflow.css`. You may want to disable shadows & gradients for good performance on mobile.
 
 ## Attributes
 
