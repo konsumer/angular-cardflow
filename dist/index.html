@@ -2,21 +2,22 @@
 <html lang="en" ng-app="angular-cardflow-example">
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="user-scalable=0, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
         <title>angular-cardflow</title>
         <link href="demo.css" rel="stylesheet">
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.11/angular.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.11/angular-touch.min.js"></script>
-        <script src="../cardflow.js"></script>
-        <link href="cardflow.css" rel="stylesheet">
+        
+        <script src="cardflow.min.js"></script>
+
+        <link rel="stylesheet" href="cardflow.min.css"/>
     </head>
 
     <body ng-controller="example-controller">
 
         <div class="container">
             <a id="github" href="https://github.com/konsumer/angular-cardflow">view on github</a>
-            <div id="fps"></div>
-            
+
             <h1>angular-cardflow</h1>
             <p>Here are some examples. You can style them however you like, for example, check out <a href="carousel.html">this angular-carousel clone</a>. If you want the simplest possible setup, see <a href="simple.html">this</a>.</p>
 
@@ -56,21 +57,17 @@
     </body>
 
     <script>
+    // prevent scrolling
+    // document.onload = function(){ document.ontouchmove = function(e){ e.preventDefault(); } };
+
     angular.module('angular-cardflow-example', ['angular-cardflow'])
         .controller('example-controller', function($scope){
             // check performance and disable cool stuff if it's low
-            var fps=0, oldTime=(new Date()).getTime(), fpsOut=document.getElementById('fps');
-            function updateFps(){
-                newTime = (new Date()).getTime();
-                fps = Math.floor(1/((newTime - oldTime)/1000));
-                oldTime = newTime;
-                requestAnimationFrame(updateFps);
-            }
-            requestAnimationFrame(updateFps);
+            var fps=0, oldTime=(new Date()).getTime();
+            requestAnimationFrame(function(){
+                fps = 1/(((new Date()).getTime() - oldTime)/1000);
 
-            setInterval(function(){
-                fpsOut.innerHTML = fps.toFixed(1);
-            }, 100); 
+            });
 
             // when an item is active, scale it as well as moving it
             function activeBig(active_element, offset, scope){

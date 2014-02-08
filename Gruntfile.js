@@ -1,72 +1,40 @@
 module.exports = function(grunt) {
-
 	grunt.initConfig({
 		'gh-pages': {
 			'options': {
-				'base': '.grunt/temp'
+				'base': 'dist/'
 			},
 			'src': ['**']
 		},
-		'copy': {
-			'page':{
-				'files':[
-					{'expand': true, 'flatten': true, 'filter': 'isFile', 'src': ['examples/**'], 'dest': '.grunt/temp/'},
-					{'src': ['cardflow.js'], 'dest': '.grunt/temp/'},
-				]
-			},
-			'default':{
-				'files':[
-					{'expand': true, 'flatten': true, 'filter': 'isFile', 'src': ['examples/**'], 'dest': 'out/'},
-					{'src': ['cardflow.js'], 'dest': 'out/'},
-				]
-			}
-		},
 		'clean': {
-			'page': ['.grunt/temp/'],
-			'default': ['out/'],
+			'default': ['dist/'],
 		},
-		'uglify': {
-			'page': {
-				'files': {
-					'.grunt/temp/cardflow.min.js': ['cardflow.js']
-				}
-			},
-			'default': {
-				'files': {
-					'out/cardflow.min.js': ['cardflow.js']
-				}
+		'useminPrepare': {
+			'html': ['examples/*.html'],
+			'options': {
+				'dest': 'dist/'
 			}
 		},
-		'cssmin': {
-			'page': {
-				'expand': true,
-				'cwd': '.grunt/temp/',
-				'src': ['*.css', '!*.min.css'],
-				'dest': '.grunt/temp/',
-				'ext': '.min.css'
-			},
-			'default': {
-				'expand': true,
-				'cwd': 'out/',
-				'src': ['*.css', '!*.min.css'],
-				'dest': 'out/',
-				'ext': '.min.css'
+		'usemin':{
+			'html': ['dist/*.html']
+		},
+		'copy':{
+			'default':{
+				'files': [
+					{'expand': true, 'cwd': 'examples/', 'src': ['*.html', '*.css'], 'dest': 'dist/'},
+				]
 			}
 		}
 	});
 
-
-	// copy files to temp dir
-	// uglify coverflow.js
-	// push to gh-pages
-
 	grunt.loadNpmTasks('grunt-gh-pages');
+	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
-	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-contrib-clean');
+	grunt.loadNpmTasks('grunt-contrib-copy');
+	grunt.loadNpmTasks('grunt-usemin');
 	
-	grunt.registerTask('default', 'Minify sources out put in out/', ['clean:default', 'copy:default', 'cssmin:default', 'uglify:default']);
-	grunt.registerTask('page', 'Publish examples with minified source to github pages', ['clean:page', 'copy:page', 'cssmin:page', 'uglify:page', 'gh-pages']);
-
+	grunt.registerTask('default', 'Minify sources, output in out/', ['clean', 'useminPrepare', 'concat', 'uglify', 'cssmin', 'copy', 'usemin']);
+	grunt.registerTask('page', 'Publish minified examples to github pages', ['default', 'gh-pages']);
 };

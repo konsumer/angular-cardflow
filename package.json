@@ -1,7 +1,7 @@
 {
   "name": "angular-cardflow",
   "version": "0.0.0",
-  "description": "This is for making ng-repeat items that flow into a nice & efficient coverflow.  It is inspired by [angular-coverflow](https://github.com/southdesign/angular-coverflow), but differs in that it can handle images, divs, or whatever you like that is ng-repeating.",
+  "description": "Efficient & versatile CSS3 carousel/coverflow",
   "main": "cardflow.js",
   "directories": {
     "example": "examples"
@@ -24,6 +24,8 @@
     "grunt-contrib-uglify": "~0.3.2",
     "grunt-contrib-copy": "~0.5.0",
     "grunt-contrib-cssmin": "~0.7.0",
-    "grunt-contrib-clean": "~0.5.0"
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-usemin": "~2.0.2"
   }
 }
