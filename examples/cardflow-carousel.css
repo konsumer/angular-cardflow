@@ -103,4 +103,9 @@
         width: 100vmin;
         height: 100vmin;
     }
+
+    .cardflow-carousel .indicator{
+        width: 10vmin;
+        height: 10vmin;
+    }
 }
