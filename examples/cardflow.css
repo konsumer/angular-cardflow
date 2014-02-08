@@ -24,6 +24,7 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    -webkit-tap-highlight-color: none;
     outline: 0;
 
     cursor: pointer;
@@ -67,6 +68,7 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    -webkit-tap-highlight-color: none;
     outline: 0;
 }
 
