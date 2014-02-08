@@ -3,43 +3,67 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="user-scalable=0, initial-scale=1.0">
-        <title>Cardflow</title>
+        <title>angular-cardflow</title>
         <link href="demo.css" rel="stylesheet">
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.11/angular.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.11/angular-touch.min.js"></script>
-        <script src="http://konsumer.github.io/angular-cardflow/cardflow.min.js"></script>
-        <link href="http://konsumer.github.io/angular-cardflow/cardflow.min.css" rel="stylesheet">
+        <script src="../cardflow.js"></script>
+        <link href="cardflow.css" rel="stylesheet">
     </head>
 
     <body ng-controller="example-controller">
-        <a id="github" href="https://github.com/konsumer/angular-cardflow">view on github</a>
-        <h1>Cardflow</h1>
-        <p>Swipe left or right.</p>
-        <p><a href="simple.html">Here</a> is a simpler example.</p>
-        <p><a href="carousel.html">Here</a> is an example that is sort of like angular-carousel.</p>
-        
-        <!-- use this sort of thing if you want to add advancing buttons, complete with disabling for bounds -->
-        <button ng-click="cardflow.current=cardflow.current-1" ng-disabled="cardflow.current <= 0">&lt;</button> {{ cardflow.current+1 }} / {{ cards.length }}
-        <button ng-click="cardflow.current=cardflow.current+1"  ng-disabled="cardflow.current >= (cards.length-1)">&gt;</button>
 
-        <cardflow model="cardflow">
-            <div class="cardflow-card" ng-repeat="card in cards" style="background-image: url( {{card.image}} )">
-                {{ card.title }}
-            </div>
-        </cardflow>
+        <div class="container">
+
+            <h1>angular-cardflow</h1>
+            <p>Here are some examples. You can style them however you like, for example, check out <a href="carousel.html">this angular-carousel clone</a>. If you want the simplest possible setup, see <a href="simple.html">this</a>.</p>
+
+            <h2>swipeSnapKinetic</h2>
+            <p>swipe left or right, watch velocity &amp; snap to individual card on slow down.</p>
+
+            <button ng-click="cswipeSnapKinetic.current=cswipeSnapKinetic.current-1" ng-disabled="cswipeSnapKinetic.current <= 0">&lt;</button> {{ cswipeSnapKinetic.current+1 }} / {{ cards.length }}
+            <button ng-click="cswipeSnapKinetic.current=cswipeSnapKinetic.current+1"  ng-disabled="cswipeSnapKinetic.current >= (cards.length-1)">&gt;</button>
+
+            <cardflow model="cswipeSnapKinetic" atype="swipeSnapKinetic">
+                <div class="cardflow-card" ng-repeat="card in cards" style="background-image: url( {{card.image}} )">
+                    {{ card.title }}
+                </div>
+            </cardflow>
+
+            <h2>swipeSnap</h2>
+            <p>no kinetic, just snap to new active card</p>
+            
+            <button ng-click="cswipeSnap.current=cswipeSnap.current-1" ng-disabled="cswipeSnap.current <= 0">&lt;</button> {{ cswipeSnap.current+1 }} / {{ cards.length }}
+            <button ng-click="cswipeSnap.current=cswipeSnap.current+1"  ng-disabled="cswipeSnap.current >= (cards.length-1)">&gt;</button>
+
+            <cardflow model="cswipeSnap" atype="swipeSnap">
+                <div class="cardflow-card" ng-repeat="card in cards" style="background-image: url( {{card.image}} )">
+                    {{ card.title }}
+                </div>
+            </cardflow>
+
+
+            <h2>swipeSnapOne</h2>
+            <p>swipe left or right to advance 1</p>
+            
+            <button ng-click="cswipeSnapOne.current=cswipeSnapOne.current-1" ng-disabled="cswipeSnapOne.current <= 0">&lt;</button> {{ cswipeSnapOne.current+1 }} / {{ cards.length }}
+            <button ng-click="cswipeSnapOne.current=cswipeSnapOne.current+1"  ng-disabled="cswipeSnapOne.current >= (cards.length-1)">&gt;</button>
+
+            <cardflow model="cswipeSnapOne" atype="swipeSnapOne">
+                <div class="cardflow-card" ng-repeat="card in cards" style="background-image: url( {{card.image}} )">
+                    {{ card.title }}
+                </div>
+            </cardflow>
+
+        </div>
 
     </body>
 
     <script>
-    // Example controller
     angular.module('angular-cardflow-example', ['angular-cardflow'])
         .controller('example-controller', function($scope){
-            // model to hold info about cardflow
-            $scope.cardflow = {};
-
-            // optional active callback:
-            // scale active, rather than just setting it's offset
-            $scope.cardflow.onActive = function(active_element, offset, scope){
+            // when an item is active, scale it as well as moving it
+            function activeBig(active_element, offset, scope){
                 active_element.css({
                     'transform': 'translate3d('+offset+'px,0,0) scale(1.2)',
                     '-webkit-transform': 'translate3d('+offset+'px,0,0) scale(1.2)',
@@ -47,6 +71,10 @@
                     '-moz-transform': 'translate3d('+offset+'px,0,0) scale(1.2)'
                 });
             }
+
+            $scope.cswipeSnap = {onActive:activeBig};
+            $scope.cswipeSnapKinetic = {onActive:activeBig};
+            $scope.cswipeSnapOne = {onActive:activeBig};
 
             // generate 40 cards
             $scope.cards = [];
