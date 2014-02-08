@@ -107,8 +107,8 @@
 
 @media (max-width: 400px) {
     .cardflow-container, .cardflow-card {
-        width: 100vw;
-        height: 100vw;
+        width: 33vw;
+        height: 33vw;
     }
     
     .cardflow-card {
