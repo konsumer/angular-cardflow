@@ -105,7 +105,6 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
                                     if (scope.atype == 'swipeSnapKinetic'){
                                         var timePassed = (new Date()).getTime() - startTime;
                                         var distance = coords.x - startX;
-                                        var direction = (distance > 0) ? 1 : -1;
                                         var velocity = Math.abs(distance/timePassed);
 
                                         if (velocity>0.8){
