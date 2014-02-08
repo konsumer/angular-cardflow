@@ -30,10 +30,6 @@ See files in `examples` for usage examples, but here's the basics:
 
 You can force the current card, if you don't want it to be the first one.
 
-### margin
-
-You can set the margin between cards, in pixels. Default is 10.
-
 ### atype
 
 You can set different interaction modes with the `atype` attribute. Here are the available options:
