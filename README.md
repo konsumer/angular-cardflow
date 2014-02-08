@@ -12,7 +12,6 @@ Here are some more features:
 *  mobile-friendly, tested on webkit+firefox
 *  use CSS 3D transformations directly, no `window.requestAnimationFrame()`.
 *  all the look is defined in your own CSS
-*  you can use it to make single-card-visible carousels, swipee coverflows, no-swipe coverflows, or whatever
 *  data-binding & callbacks
 
 See a [demo](http://konsumer.github.io/angular-cardflow/)
