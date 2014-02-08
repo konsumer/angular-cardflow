@@ -10,7 +10,7 @@ This is for making ng-repeat items that flow into a nice & efficient coverflow. 
 Here are some more features:
 
 *  mobile-friendly, tested on webkit+firefox
-*  use CSS 3D transformations directly, no `window.requestAnimationFrame()`.
+*  use CSS 3D transformations directly, no `requestAnimationFrame()` or `setTimeout`.
 *  all the look is defined in your own CSS, or use mine, if you want it to look the same.
 *  data-binding & callbacks
 
