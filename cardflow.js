@@ -138,7 +138,7 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
                                 },
                                 // move cards on move (for a grab effect)
                                 move: function(coords){
-                                    position = scope.position+coords.x-positionLimitLeft - offset;
+                                    position = scope.position+coords.x-positionLimitLeft - offset - (cardWidth/2);
                                     setPosition(position);
                                 }
                             });
