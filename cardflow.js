@@ -25,7 +25,7 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
             scope.$watch('model.current', init );
             
             // internal vars
-            var cardWidth, cardEls, positionLimitLeft, positionLimitRight, bound;
+            var cardWidth, cardEls, positionLimitLeft, positionLimitRight, bound, container = element.find('div');
 
             // update position
             function setPosition(position){
@@ -89,32 +89,36 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
 
                     if (scope.atype == 'swipeSnap'){
                         // calculate current card with start/end
-                        var startTime=0;
-                        var startX=0;
                         var transition;
                         var position;
+                        var offset;
 
                         // only bind once
                         if (!bound){
                             bound=true;
                             $swipe.bind(element, {
                                 start: function(coords){
-                                    startTime= (new Date()).getTime();
-                                    startX = coords.x;
-
                                     // disable transition
                                     angular.forEach(['moz','o','webkit'], function(p){
                                         cardEls.css(p+'Transition', 'none');
                                     });
                                     cardEls.css({'transition':'none'});
+
+                                    offset = coords.x-(container[0].clientWidth/2)-cardWidth;
+                                    console.log(offset);
                                 },
                                 end: function(coords){
                                     // restore transition
-                                    cardEls.css(transition);                                 
+                                    cardEls.css(transition);
+                                    cardEls.removeClass('cardflow-active');
+
+                                    // need to figure out scope.model.current here
+
+                                    update(0);
                                 },
                                 // move cards on move (for a grab effect)
                                 move: function(coords){
-                                    position = scope.position+coords.x-positionLimitLeft+scope.margin;
+                                    position = scope.position+coords.x-positionLimitLeft - offset;
                                     setPosition(position);
                                 }
                             });
