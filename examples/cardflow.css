@@ -106,9 +106,12 @@
 /* set to single-image style on small screens*/
 
 @media (max-width: 400px) {
-    .cardflow-container, .cardflow-card {
-        width: 33vw;
-        height: 33vw;
+    .cardflow-container {
+        width: 100vw;
+    }
+    .cardflow-card {
+        width: 30vw;
+        height: 30vw;
     }
     
     .cardflow-card {
