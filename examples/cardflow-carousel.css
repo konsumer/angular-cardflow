@@ -100,3 +100,10 @@
     background-color: #fff;
     background-color: rgba(255, 255, 255, 0.6);
 }
+
+@media (max-width: 400px) {
+    .container {
+        width: 100vw;
+        height: 100vw;
+    }
+}
