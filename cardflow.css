@@ -77,9 +77,17 @@
 }
 
 @media (max-width: 480px) {
-    -moz-box-shadow:    none;
-    -webkit-box-shadow: none;
-    box-shadow:         none;
+    .cardflow-card, .cardflow-card.cardflow-active  {
+        -moz-box-shadow:    none;
+        -webkit-box-shadow: none;
+        box-shadow:         none;
+
+        -webkit-box-reflect: none;
+    }
+
+    .cardflow-container {
+        background: #ccc;
+    }
 }
 
 @media (max-width: 200px) {
