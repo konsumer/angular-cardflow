@@ -71,6 +71,7 @@
     transition: opacity 0.5s ease-out;
     -moz-transition: opacity 0.5s ease-out;
     -o-transition: opacity 0.5s ease-out;
+    width: 100%;
 }
 
 .cardflow-carousel:hover .indicators{
