@@ -2,7 +2,7 @@
 
 This is for making ng-repeat items that flow into a nice & efficient coverflow.  It is inspired by [angular-coverflow](https://github.com/southdesign/angular-coverflow) and [angular-carousel](https://github.com/revolunet/angular-carousel), but differs in a few ways:
 
-*  It can handle images, divs, or whatever you like that is ng-repeating
+*  It can handle images, divs, or whatever you like, including ngRepeats. first-level children are the "cards"
 *  Uses Angular's `$swipe`
 *  It has multiple interaction modes
 *  Lots of attribute options with sensible defaults
