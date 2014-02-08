@@ -40,7 +40,7 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
                 if (delta === 0 || (delta === -1 && scope.model.current > 0) || (delta === 1 && scope.model.current < (cardEls.length-1) ) ){
                     // do I really need to re-calculate this every time?
                     cardEls = element.children().children();
-                    cardWidth = cardEls[1].offsetWidth;
+                    cardWidth = cardEls[1].offsetLeft-cardEls[0].offsetLeft;
 
                     scope.model.current += delta;
                     scope.position = -(scope.model.current*cardWidth);

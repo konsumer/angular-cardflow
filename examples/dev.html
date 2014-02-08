@@ -25,7 +25,7 @@
             <button ng-click="cswipeSnapKinetic.current=cswipeSnapKinetic.current-1" ng-disabled="cswipeSnapKinetic.current <= 0">&lt;</button> {{ cswipeSnapKinetic.current+1 }} / {{ cards.length }}
             <button ng-click="cswipeSnapKinetic.current=cswipeSnapKinetic.current+1"  ng-disabled="cswipeSnapKinetic.current >= (cards.length-1)">&gt;</button>
             <cardflow model="cswipeSnapKinetic" atype="swipeSnapKinetic">
-                <div class="cardflow-card" ng-repeat="card in cards" style="left: {{$index*220}}px; background-image: url( {{card.image}} )">
+                <div class="cardflow-card" ng-repeat="card in cards" style="left: {{$index*210}}px; background-image: url( {{card.image}} )">
                     {{ card.title }}
                 </div>
             </cardflow>
@@ -35,7 +35,7 @@
             <button ng-click="cswipeSnap.current=cswipeSnap.current-1" ng-disabled="cswipeSnap.current <= 0">&lt;</button> {{ cswipeSnap.current+1 }} / {{ cards.length }}
             <button ng-click="cswipeSnap.current=cswipeSnap.current+1"  ng-disabled="cswipeSnap.current >= (cards.length-1)">&gt;</button>
             <cardflow model="cswipeSnap" atype="swipeSnap">
-                <div class="cardflow-card" ng-repeat="card in cards" style="left: {{$index*220}}px; background-image: url( {{card.image}} )">
+                <div class="cardflow-card" ng-repeat="card in cards" style="left: {{$index*210}}px; background-image: url( {{card.image}} )">
                     {{ card.title }}
                 </div>
             </cardflow>
@@ -46,7 +46,7 @@
             <button ng-click="cswipeSnapOne.current=cswipeSnapOne.current-1" ng-disabled="cswipeSnapOne.current <= 0">&lt;</button> {{ cswipeSnapOne.current+1 }} / {{ cards.length }}
             <button ng-click="cswipeSnapOne.current=cswipeSnapOne.current+1"  ng-disabled="cswipeSnapOne.current >= (cards.length-1)">&gt;</button>
             <cardflow model="cswipeSnapOne" atype="swipeSnapOne">
-                <div class="cardflow-card" ng-repeat="card in cards" style="left: {{$index*220}}px; background-image: url( {{card.image}} )">
+                <div class="cardflow-card" ng-repeat="card in cards" style="left: {{$index*210}}px; background-image: url( {{card.image}} )">
                     {{ card.title }}
                 </div>
             </cardflow>
