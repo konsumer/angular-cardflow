@@ -3,17 +3,12 @@
 .cardflow-carousel {
     border: 1px solid #fff;
     position:relative;
-     width: 400px;
-    height: 400px;
 }
 
 .cardflow-carousel .cardflow-container {
     overflow: hidden;
     position:relative;
     display: block;
-
-    width: 400px;
-    height: 400px;
 
     /* disable text selection */
     -webkit-touch-callout: none;
@@ -29,10 +24,6 @@
 
 .cardflow-carousel .cardflow-card{
     position: absolute;
-
-    width: 400px;
-    height: 400px;
-
     text-shadow: 2px 4px 3px rgba(0,0,0,0.3);
     text-align: center;
     line-height:400px;
@@ -56,6 +47,11 @@
 
     /* this makes fade-in work */
     opacity:0;
+}
+
+.cardflow-carousel , .cardflow-carousel .cardflow-card, .cardflow-carousel .cardflow-container {
+    width: 400px;
+    height: 400px;
 }
 
 .cardflow-carousel .cardflow-card.cardflow-active {
@@ -102,7 +98,8 @@
 }
 
 @media (max-width: 400px) {
-    .container {
+    
+    .cardflow-carousel , .cardflow-carousel .cardflow-card, .cardflow-carousel .cardflow-container {
         width: 100vmin;
         height: 100vmin;
     }
