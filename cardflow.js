@@ -88,11 +88,6 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
                         // calculate current card with start/end
                         var transition, position, offset, startTime, startX;
 
-
-                        window.requestAnimationFrame(function(){
-                            setPosition(position);
-                        });
-
                         // only bind once
                         if (!bound){
                             bound=true;
@@ -144,6 +139,7 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
                                 // move cards on move (for a grab effect)
                                 move: function(coords){
                                     position = scope.position+coords.x-positionLimitLeft - offset - (cardWidth/2);
+                                    setPosition(position);
                                 }
                             });
                         }
