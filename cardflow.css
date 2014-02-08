@@ -98,7 +98,8 @@
 @media (max-width: 200px) {
     
     .cardflow-card {
-        width: 33vmin;
-        height: 33vmin;
+        width: 100vw;
+        height: 100vw;
+        margin-left: 0; /* center cards to parent. first card is active, in the middle */
     }
 }
