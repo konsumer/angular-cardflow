@@ -3,7 +3,7 @@
 angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe', '$compile', '$window', function($swipe, $compile, $window) {
     return {
         'restrict': 'E',
-        'template':'<div class="cardflow-container" ng-transclude ng-swipe-left="swipeLeft()" ng-swipe-right="swipeRight()"></div>',
+        'template':'<div class="cardflow-container" ng-transclude ng-swipe-left="swipeLeft($event)" ng-swipe-right="swipeRight($event)"></div>',
         transclude: true,
         'scope': { 'model':'=?', 'atype':'=?', 'margin':'=?', 'animTime':'=?', 'current':'=?' },
         'link': function(scope, element, attrs) {
@@ -87,7 +87,7 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
                         }
                     });
 
-                    if (scope.atype == 'swipeSnap'){
+                    if (scope.atype == 'swipeSnap' || scope.atype == 'swipeSnapKinetic'){
                         // calculate current card with start/end
                         var transition;
                         var position;
@@ -103,18 +103,24 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
                                         cardEls.css(p+'Transition', 'none');
                                     });
                                     cardEls.css({'transition':'none'});
-
                                     offset = coords.x-(container[0].clientWidth/2)-cardWidth;
-                                    console.log(offset);
                                 },
                                 end: function(coords){
                                     // restore transition
                                     cardEls.css(transition);
-                                    cardEls.removeClass('cardflow-active');
-
-                                    // need to figure out scope.model.current here
-
-                                    update(0);
+                                    var current = Math.floor((position/-cardWidth) + 0.5);
+                                    if (current >=0){
+                                        if (current > (cardEls.length-1)){
+                                            current = cardEls.length-1;
+                                        }
+                                    }else{
+                                        current = 0;
+                                    }
+                                    // trigger update
+                                    scope.model.current=-1;
+                                    scope.$apply();
+                                    scope.model.current=current;
+                                    scope.$apply();
                                 },
                                 // move cards on move (for a grab effect)
                                 move: function(coords){
@@ -127,7 +133,7 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
                 }else{
                     // HACK: add active when transcluded elements are available
                     // need to find a better way to do this...
-                    setTimeout(init, 1);
+                    setTimeout(init, 100);
                 }
             }
 
@@ -139,15 +145,24 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
                 update(0);
             });
 
-            scope.swipeLeft = function(){
+            scope.swipeLeft = function(e){
                 if (scope.atype == 'swipeSnapOne'){
                     update(1);
                 }
+                if (scope.atype == 'swipeSnapKinetic'){
+                    // figure out velocity, increase scope.model.current here
+                    console.log(e)
+                }
+
             }
 
-            scope.swipeRight = function(){
+            scope.swipeRight = function(e){
                 if (scope.atype == 'swipeSnapOne'){
                     update(-1);
+                }
+                if (scope.atype == 'swipeSnapKinetic'){
+                    // figure out velocity, decrease scope.model.current here
+                    console.log(e)
                 }
             }
         }

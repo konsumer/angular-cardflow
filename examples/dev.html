@@ -14,23 +14,44 @@
     <body ng-controller="example-controller">
 
         <h1>Dev Version</h1>
-        <p>This uses non-CDN'd, un-minified local files. I use it while developing.</p>
+        <p>This uses non-CDN'd, un-minified local files. I use it while developing/testing.</p>
 
-        <cardflow model="cardflow">
+        <h2>swipeSnapKinetic</h2>
+        {{ cswipeSnapKinetic.current+1 }} / {{ cards.length }}
+
+        <cardflow model="cswipeSnapKinetic" atype="swipeSnapKinetic">
             <div class="cardflow-card" ng-repeat="card in cards" style="background-image: url( {{card.image}} )">
                 {{ card.title }}
             </div>
         </cardflow>
 
-        <button ng-click="cardflow.current=cardflow.current-1" ng-disabled="cardflow.current <= 0">&lt;</button> {{ cardflow.current+1 }} / {{ cards.length }}
-        <button ng-click="cardflow.current=cardflow.current+1"  ng-disabled="cardflow.current >= (cards.length-1)">&gt;</button>
+        <h2>swipeSnap</h2>
+        {{ cswipeSnap.current+1 }} / {{ cards.length }}
+
+        <cardflow model="cswipeSnap" atype="swipeSnap">
+            <div class="cardflow-card" ng-repeat="card in cards" style="background-image: url( {{card.image}} )">
+                {{ card.title }}
+            </div>
+        </cardflow>
+
+
+        <h2>swipeSnapOne</h2>
+        {{ cswipeSnapOne.current+1 }} / {{ cards.length }}
+
+        <cardflow model="cswipeSnapOne" atype="swipeSnapOne">
+            <div class="cardflow-card" ng-repeat="card in cards" style="background-image: url( {{card.image}} )">
+                {{ card.title }}
+            </div>
+        </cardflow>
 
     </body>
 
     <script>
     angular.module('angular-cardflow-example', ['angular-cardflow'])
         .controller('example-controller', function($scope){
-            $scope.cardflow = {};
+            $scope.cswipeSnap = {};
+            $scope.cswipeSnapKinetic = {};
+            $scope.cswipeSnapOne = {};
 
             // generate 40 cards
             $scope.cards = [];
