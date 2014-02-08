@@ -12,26 +12,29 @@
     </head>
 
     <body ng-controller="example-controller">
-        <a id="github" href="https://github.com/konsumer/angular-cardflow">view on github</a>
-        <h1>Carousel Cardflow</h1>
-        <p>This is sort of like <a href="https://github.com/revolunet/angular-carousel">angular-carousel</a></p>
-        <p>Swipe left or right to advance 1 card. Hover to see indicators. Click on indicators to jump to a specific card.</p>
-        <p><a href="index.html">Here</a> is a more scrollee example.</p>
-        <p><a href="simple.html">Here</a> is a simple example.</p>
+        <div class="container">
 
-        <div class="cardflow-carousel">
+            <a id="github" href="https://github.com/konsumer/angular-cardflow">view on github</a>
+            <h1>Carousel Cardflow</h1>
+            <p>This is sort of like <a href="https://github.com/revolunet/angular-carousel">angular-carousel</a></p>
+            <p>Swipe left or right to advance 1 card. Hover to see indicators. Click on indicators to jump to a specific card.</p>
+            <p><a href="index.html">Here</a> is a more complete example.</p>
+            <p><a href="simple.html">Here</a> is a simple example.</p>
 
-            <cardflow atype="swipeSnapOne" margin="1" model="cardflow">
-                <div class="cardflow-card" ng-repeat="card in cards" style="background-image: url( {{card.image}} )">
-                    {{ card.title }}
+            <div class="cardflow-carousel">
+
+                <cardflow atype="swipeSnapOne" margin="1" model="cardflow">
+                    <div class="cardflow-card" ng-repeat="card in cards" style="background-image: url( {{card.image}} )">
+                        {{ card.title }}
+                    </div>
+                </cardflow>
+
+                <!-- make an indicator with regular angular stuff! -->
+                <div class="indicators">
+                    <div class="indicator" ng-click="cardflow.current=$index" ng-repeat="card in cards" ng-class="{ active: cardflow.current == $index }">
                 </div>
-            </cardflow>
 
-            <!-- make an indicator with regular angular stuff! -->
-            <div class="indicators">
-                <div class="indicator" ng-click="cardflow.current=$index" ng-repeat="card in cards" ng-class="{ active: cardflow.current == $index }">
             </div>
-
         </div>
 
     </body>

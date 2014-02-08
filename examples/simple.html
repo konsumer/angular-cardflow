@@ -12,18 +12,18 @@
     </head>
 
     <body ng-controller="example-controller">
-        <a id="github" href="https://github.com/konsumer/angular-cardflow">view on github</a>
-        <h1>Simple Cardflow</h1>
-        <p>Swipe left or right.</p>
-        <p><a href="index.html">Here</a> is a more complete example.</p>
-        <p><a href="carousel.html">Here</a> is an example that is sort of like angular-carousel.</p>
-
-        <cardflow>
-            <div class="cardflow-card" ng-repeat="card in cards" style="background-image: url( {{card.image}} )">
-                {{ card.title }}
-            </div>
-        </cardflow>
-
+        <div class="container">
+            <a id="github" href="https://github.com/konsumer/angular-cardflow">view on github</a>
+            <h1>Simple Cardflow</h1>
+            <p>Swipe left or right.</p>
+            <p><a href="index.html">Here</a> is a more complete example.</p>
+            <p><a href="carousel.html">Here</a> is an example that is sort of like angular-carousel.</p>
+            <cardflow>
+                <div class="cardflow-card" ng-repeat="card in cards" style="background-image: url( {{card.image}} )">
+                    {{ card.title }}
+                </div>
+            </cardflow>
+        </div>
     </body>
 
     <script>
