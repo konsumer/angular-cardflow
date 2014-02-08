@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="angular-cardflow-example">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="user-scalable=0, initial-scale=1.0">
+        <title>Cardflow</title>
+        <link href="demo.css" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.11/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.11/angular-touch.min.js"></script>
+        <script src="../cardflow.js"></script>
+        <link href="cardflow.css" rel="stylesheet">
+    </head>
+
+    <body ng-controller="example-controller">
+
+        <h1>Dev Version</h1>
+        <p>This uses non-CDN'd, un-minified local files. I use it while developing/testing.</p>
+
+        <h2>swipeSnapKinetic</h2>
+        {{ cswipeSnapKinetic.current+1 }} / {{ cards.length }}
+
+        <cardflow model="cswipeSnapKinetic" atype="swipeSnapKinetic">
+            <div class="cardflow-card" ng-repeat="card in cards" style="background-image: url( {{card.image}} )">
+                {{ card.title }}
+            </div>
+        </cardflow>
+
+        <h2>swipeSnap</h2>
+        {{ cswipeSnap.current+1 }} / {{ cards.length }}
+
+        <cardflow model="cswipeSnap" atype="swipeSnap">
+            <div class="cardflow-card" ng-repeat="card in cards" style="background-image: url( {{card.image}} )">
+                {{ card.title }}
+            </div>
+        </cardflow>
+
+
+        <h2>swipeSnapOne</h2>
+        {{ cswipeSnapOne.current+1 }} / {{ cards.length }}
+
+        <cardflow model="cswipeSnapOne" atype="swipeSnapOne">
+            <div class="cardflow-card" ng-repeat="card in cards" style="background-image: url( {{card.image}} )">
+                {{ card.title }}
+            </div>
+        </cardflow>
+
+    </body>
+
+    <script>
+    angular.module('angular-cardflow-example', ['angular-cardflow'])
+        .controller('example-controller', function($scope){
+            $scope.cswipeSnap = {};
+            $scope.cswipeSnapKinetic = {};
+            $scope.cswipeSnapOne = {};
+
+            // generate 40 cards
+            $scope.cards = [];
+            var types = ['cats','fashion','nature','food','abstract','nightlife'];
+            for (var i=0; i<40; i++){
+                var t = types[i % types.length];
+                $scope.cards.push({image:'http://lorempixel.com/200/200/' + t + '/'+((i%10)+1), title: t});
+            }
+        });
+    </script>
+</html>
