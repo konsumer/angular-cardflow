@@ -81,6 +81,8 @@
     box-shadow:         0 0 4px 4px rgba(127,127,127,0.5);
 }
 
+/* performance: get rid of shadows, reflections & gradients on mobile */
+
 @media (max-width: 480px) {
     .cardflow-card, .cardflow-card.cardflow-active  {
         -moz-box-shadow:    none;
@@ -101,10 +103,12 @@
     }
 }
 
+/* set to single-image style on small screens*/
+
 @media (max-width: 200px) {
     .cardflow-container, .cardflow-card {
-        width: 100%;
-        height: 100%;
+        width: 100vw;
+        height: 100vw;
     }
     
     .cardflow-card {
