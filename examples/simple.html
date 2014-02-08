@@ -19,7 +19,7 @@
             <p><a href="index.html">Here</a> is a more complete example.</p>
             <p><a href="carousel.html">Here</a> is an example that is sort of like angular-carousel.</p>
             <cardflow>
-                <div class="cardflow-card" ng-repeat="card in cards" style="background-image: url( {{card.image}} )">
+                <div class="cardflow-card" ng-repeat="card in cards" style="left: {{$index*210}}px; background-image: url( {{card.image}} )">
                     {{ card.title }}
                 </div>
             </cardflow>

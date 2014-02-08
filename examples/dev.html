@@ -15,6 +15,7 @@
 
         <div class="container">
             <a id="github" href="https://github.com/konsumer/angular-cardflow">view on github</a>
+            <div id="fps"></div>
             
             <h1>angular-cardflow</h1>
             <p>Here are some examples. You can style them however you like, for example, check out <a href="carousel.html">this angular-carousel clone</a>. If you want the simplest possible setup, see <a href="simple.html">this</a>.</p>
@@ -24,7 +25,7 @@
             <button ng-click="cswipeSnapKinetic.current=cswipeSnapKinetic.current-1" ng-disabled="cswipeSnapKinetic.current <= 0">&lt;</button> {{ cswipeSnapKinetic.current+1 }} / {{ cards.length }}
             <button ng-click="cswipeSnapKinetic.current=cswipeSnapKinetic.current+1"  ng-disabled="cswipeSnapKinetic.current >= (cards.length-1)">&gt;</button>
             <cardflow model="cswipeSnapKinetic" atype="swipeSnapKinetic">
-                <div class="cardflow-card" ng-repeat="card in cards" style="background-image: url( {{card.image}} )">
+                <div class="cardflow-card" ng-repeat="card in cards" style="left: {{$index*220}}px; background-image: url( {{card.image}} )">
                     {{ card.title }}
                 </div>
             </cardflow>
@@ -34,7 +35,7 @@
             <button ng-click="cswipeSnap.current=cswipeSnap.current-1" ng-disabled="cswipeSnap.current <= 0">&lt;</button> {{ cswipeSnap.current+1 }} / {{ cards.length }}
             <button ng-click="cswipeSnap.current=cswipeSnap.current+1"  ng-disabled="cswipeSnap.current >= (cards.length-1)">&gt;</button>
             <cardflow model="cswipeSnap" atype="swipeSnap">
-                <div class="cardflow-card" ng-repeat="card in cards" style="background-image: url( {{card.image}} )">
+                <div class="cardflow-card" ng-repeat="card in cards" style="left: {{$index*220}}px; background-image: url( {{card.image}} )">
                     {{ card.title }}
                 </div>
             </cardflow>
@@ -45,7 +46,7 @@
             <button ng-click="cswipeSnapOne.current=cswipeSnapOne.current-1" ng-disabled="cswipeSnapOne.current <= 0">&lt;</button> {{ cswipeSnapOne.current+1 }} / {{ cards.length }}
             <button ng-click="cswipeSnapOne.current=cswipeSnapOne.current+1"  ng-disabled="cswipeSnapOne.current >= (cards.length-1)">&gt;</button>
             <cardflow model="cswipeSnapOne" atype="swipeSnapOne">
-                <div class="cardflow-card" ng-repeat="card in cards" style="background-image: url( {{card.image}} )">
+                <div class="cardflow-card" ng-repeat="card in cards" style="left: {{$index*220}}px; background-image: url( {{card.image}} )">
                     {{ card.title }}
                 </div>
             </cardflow>
@@ -57,9 +58,23 @@
     <script>
     angular.module('angular-cardflow-example', ['angular-cardflow'])
         .controller('example-controller', function($scope){
+            // check performance and disable cool stuff if it's low
+            var fps=0, oldTime=(new Date()).getTime(), fpsOut=document.getElementById('fps');
+            function updateFps(){
+                newTime = (new Date()).getTime();
+                fps = Math.floor(1/((newTime - oldTime)/1000));
+                oldTime = newTime;
+                requestAnimationFrame(updateFps);
+            }
+            requestAnimationFrame(updateFps);
+
+            setInterval(function(){
+                fpsOut.innerHTML = fps.toFixed(1);
+            }, 100); 
+
             // when an item is active, scale it as well as moving it
             function activeBig(active_element, offset, scope){
-                if (window.clientWidth >= 480){
+                if (fps  > 30){
                     active_element.css({
                         'transform': 'translate3d('+offset+'px,0,0) scale(1.2)',
                         '-webkit-transform': 'translate3d('+offset+'px,0,0) scale(1.2)',

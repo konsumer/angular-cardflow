@@ -5,16 +5,13 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
         'restrict': 'E',
         'template':'<div class="cardflow-container" ng-transclude ng-swipe-left="swipeLeft($event)" ng-swipe-right="swipeRight($event)"></div>',
         transclude: true,
-        'scope': { 'model':'=?', 'atype':'=?', 'margin':'=?', 'current':'=?' },
+        'scope': { 'model':'=?', 'atype':'=?', 'current':'=?' },
         'link': function(scope, element, attrs) {
             // model for reaching into this for callbacks and data-binding
             scope.model = scope.model ||  {};
             
             // swipeSnap or swipeSnapOne
             scope.atype = attrs.atype || 'swipeSnapKinetic';
-
-            // margin for cards
-            scope.margin = scope.margin  || 10;
 
             // currently selected card, can be set with param
             scope.model.current = scope.current || 0;
@@ -43,7 +40,7 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
                 if (delta === 0 || (delta === -1 && scope.model.current > 0) || (delta === 1 && scope.model.current < (cardEls.length-1) ) ){
                     // do I really need to re-calculate this every time?
                     cardEls = element.children().children();
-                    cardWidth = cardEls[1].offsetHeight + scope.margin;
+                    cardWidth = cardEls[1].offsetWidth;
 
                     scope.model.current += delta;
                     scope.position = -(scope.model.current*cardWidth);
@@ -63,11 +60,7 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
             function init(){
                 cardEls = element.children().children();
                 if (cardEls && cardEls.length){
-                    cardWidth = cardEls[1].offsetHeight + scope.margin;
-
-                    angular.forEach(cardEls, function(el, i){
-                        angular.element(el).css({ left: (i * cardWidth) + 'px' });
-                    });
+                    cardWidth = cardEls[1].offsetHeight;
 
                     update(0);
 
