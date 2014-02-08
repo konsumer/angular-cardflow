@@ -89,9 +89,7 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
 
                     if (scope.atype == 'swipeSnap' || scope.atype == 'swipeSnapKinetic'){
                         // calculate current card with start/end
-                        var transition;
-                        var position;
-                        var offset;
+                        var transition, position, offset, startTime, startX;
 
                         // only bind once
                         if (!bound){
@@ -104,11 +102,29 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
                                     });
                                     cardEls.css({'transition':'none'});
                                     offset = coords.x-(container[0].clientWidth/2)-cardWidth;
+                                    if (scope.atype == 'swipeSnapKinetic'){
+                                        startTime = (new Date()).getTime();
+                                        startX = coords.x;
+                                    }
                                 },
                                 end: function(coords){
                                     // restore transition
                                     cardEls.css(transition);
                                     var current = Math.floor((position/-cardWidth) + 0.5);
+
+                                    if (scope.atype == 'swipeSnapKinetic'){
+                                        var timePassed = (new Date()).getTime() - startTime;
+                                        var distance = coords.x - startX;
+                                        var direction = distance > 0 ? 1 : -1;
+                                        var velocity = Math.abs(distance/timePassed);
+
+                                        if (velocity>0.8){
+                                            current += direction * Math.floor(distance/cardWidth);
+                                        }
+
+                                        console.log({distance:distance, direction:direction, velocity:velocity, timePassed:timePassed})
+                                    }
+
                                     if (current >=0){
                                         if (current > (cardEls.length-1)){
                                             current = cardEls.length-1;
@@ -116,6 +132,7 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
                                     }else{
                                         current = 0;
                                     }
+
                                     // trigger update
                                     scope.model.current=-1;
                                     scope.$apply();
@@ -145,24 +162,17 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
                 update(0);
             });
 
+            // maybe I should  do these in bindings above
+
             scope.swipeLeft = function(e){
                 if (scope.atype == 'swipeSnapOne'){
                     update(1);
                 }
-                if (scope.atype == 'swipeSnapKinetic'){
-                    // figure out velocity, increase scope.model.current here
-                    console.log(e)
-                }
-
             }
 
             scope.swipeRight = function(e){
                 if (scope.atype == 'swipeSnapOne'){
                     update(-1);
-                }
-                if (scope.atype == 'swipeSnapKinetic'){
-                    // figure out velocity, decrease scope.model.current here
-                    console.log(e)
                 }
             }
         }
