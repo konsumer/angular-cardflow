@@ -119,7 +119,7 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
                                             current += direction * Math.floor(distance/cardWidth);
                                         }
 
-                                        console.log({distance:distance, direction:direction, velocity:velocity, timePassed:timePassed})
+                                        // console.log({distance:distance, direction:direction, velocity:velocity, timePassed:timePassed})
                                     }
 
                                     if (current >=0){
