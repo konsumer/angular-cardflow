@@ -5,7 +5,7 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
         'restrict': 'E',
         'template':'<div class="cardflow-container" ng-transclude ng-swipe-left="swipeLeft($event)" ng-swipe-right="swipeRight($event)"></div>',
         transclude: true,
-        'scope': { 'model':'=?', 'atype':'=?', 'margin':'=?', 'animTime':'=?', 'current':'=?' },
+        'scope': { 'model':'=?', 'atype':'=?', 'margin':'=?', 'current':'=?' },
         'link': function(scope, element, attrs) {
             // model for reaching into this for callbacks and data-binding
             scope.model = scope.model ||  {};
@@ -15,9 +15,6 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
 
             // margin for cards
             scope.margin = scope.margin  || 10;
-            
-            //  time that it takes to animate a movemnt in CSS transition 
-            scope.animTime = scope.animTime || 0.25;
 
             // currently selected card, can be set with param
             scope.model.current = scope.current || 0;
