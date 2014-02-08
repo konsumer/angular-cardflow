@@ -121,6 +121,10 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
                                     scope.$apply();
                                     scope.model.current=current;
                                     scope.$apply();
+
+                                    if (scope.atype == 'swipeSnapKinetic'){
+                                        // do some velocity stuff here, modify current
+                                    }
                                 },
                                 // move cards on move (for a grab effect)
                                 move: function(coords){
@@ -144,6 +148,8 @@ angular.module('angular-cardflow', ['ngTouch']).directive('cardflow', ['$swipe',
             angular.element($window).bind('resize',function(){
                 update(0);
             });
+
+            // maybe I should  do these in bindings above
 
             scope.swipeLeft = function(e){
                 if (scope.atype == 'swipeSnapOne'){
