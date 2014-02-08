@@ -76,6 +76,12 @@
     box-shadow:         0 0 4px 4px rgba(127,127,127,0.5);
 }
 
+@media (max-width: 480px) {
+    -moz-box-shadow:    none;
+    -webkit-box-shadow: none;
+    box-shadow:         none;
+}
+
 @media (max-width: 200px) {
     
     .cardflow-card {
