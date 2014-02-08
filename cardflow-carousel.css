@@ -100,6 +100,9 @@
 }
 
 @media (max-width: 400px) {
+    .cardflow-carousel .cardflow-card {
+        opacity:1;
+    }
     
     .cardflow-carousel , .cardflow-carousel .cardflow-card, .cardflow-carousel .cardflow-container {
         width: 100vmin;
