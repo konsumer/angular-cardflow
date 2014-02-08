@@ -115,6 +115,6 @@
     }
     
     .cardflow-card {
-        margin-left: 0; /* center cards to parent. first card is active, in the middle */
+        margin-left: 30vw; /* center cards to parent. first card is active, in the middle */
     }
 }
