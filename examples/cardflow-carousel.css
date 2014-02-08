@@ -103,7 +103,7 @@
 
 @media (max-width: 400px) {
     .container {
-        width: 100vw;
-        height: 100vw;
+        width: 100vmin;
+        height: 100vmin;
     }
 }
