@@ -22,39 +22,14 @@
         <div class="container">
             <a id="github" href="https://github.com/konsumer/angular-cardflow">view on github</a>
 
-            <h1>angular-cardflow</h1>
-            <p>Here are some examples. You can style them however you like, for example, check out <a href="carousel.html">this angular-carousel clone</a>. If you want the simplest possible setup, see <a href="simple.html">this</a>.</p>
-
-            <h2>swipeSnapKinetic</h2>
             <p>swipe left or right, watch velocity &amp; snap to individual card on slow down.</p>
-            <button ng-click="cswipeSnapKinetic.current=cswipeSnapKinetic.current-1" ng-disabled="cswipeSnapKinetic.current <= 0">&lt;</button> {{ cswipeSnapKinetic.current+1 }} / {{ cards.length }}
-            <button ng-click="cswipeSnapKinetic.current=cswipeSnapKinetic.current+1"  ng-disabled="cswipeSnapKinetic.current >= (cards.length-1)">&gt;</button>
-            <cardflow model="cswipeSnapKinetic" atype="swipeSnapKinetic">
-                <div class="cardflow-card" ng-repeat="card in cards" style="left: {{$index*210}}px; background-image: url( {{card.image}} )">
+            <button ng-click="cardflow.current=cardflow.current-1" ng-disabled="cardflow.current <= 0">&lt;</button> {{ cardflow.current+1 }} / {{ cardflow.cards.length }}
+            <button ng-click="cardflow.current=cardflow.current+1"  ng-disabled="cardflow.current >= (cardflow.cards.length-1)">&gt;</button>
+            <cardflow-kinetic-snap model="cardflow">
+                <div class="cardflow-card" ng-repeat="card in cardflow.cards" style="background-image: url( {{card.image}} )">
                     {{ card.title }}
                 </div>
-            </cardflow>
-
-            <h2>swipeSnap</h2>
-            <p>no kinetic, just snap to new active card</p>
-            <button ng-click="cswipeSnap.current=cswipeSnap.current-1" ng-disabled="cswipeSnap.current <= 0">&lt;</button> {{ cswipeSnap.current+1 }} / {{ cards.length }}
-            <button ng-click="cswipeSnap.current=cswipeSnap.current+1"  ng-disabled="cswipeSnap.current >= (cards.length-1)">&gt;</button>
-            <cardflow model="cswipeSnap" atype="swipeSnap">
-                <div class="cardflow-card" ng-repeat="card in cards" style="left: {{$index*210}}px; background-image: url( {{card.image}} )">
-                    {{ card.title }}
-                </div>
-            </cardflow>
-
-
-            <h2>swipeSnapOne</h2>
-            <p>swipe left or right to advance 1</p>
-            <button ng-click="cswipeSnapOne.current=cswipeSnapOne.current-1" ng-disabled="cswipeSnapOne.current <= 0">&lt;</button> {{ cswipeSnapOne.current+1 }} / {{ cards.length }}
-            <button ng-click="cswipeSnapOne.current=cswipeSnapOne.current+1"  ng-disabled="cswipeSnapOne.current >= (cards.length-1)">&gt;</button>
-            <cardflow model="cswipeSnapOne" atype="swipeSnapOne">
-                <div class="cardflow-card" ng-repeat="card in cards" style="left: {{$index*210}}px; background-image: url( {{card.image}} )">
-                    {{ card.title }}
-                </div>
-            </cardflow>
+            </cardflow-kinetic-snap>
 
         </div>
 
@@ -66,36 +41,18 @@
 
     angular.module('angular-cardflow-example', ['angular-cardflow'])
         .controller('example-controller', function($scope){
-            // check performance and disable cool stuff if it's low
-            var fps=0, oldTime=(new Date()).getTime();
-            requestAnimationFrame(function(){
-                fps = 1/(((new Date()).getTime() - oldTime)/1000);
+            // model, so I can reach into cardflow
+            $scope.cardflow = {};
 
-            });
-
-            // when an item is active, scale it as well as moving it
-            function activeBig(active_element, offset, scope){
-                if (fps  > 30){
-                    active_element.css({
-                        'transform': 'translate3d('+offset+'px,0,0) scale(1.2)',
-                        '-webkit-transform': 'translate3d('+offset+'px,0,0) scale(1.2)',
-                        '-o-transform': 'translate3d('+offset+'px,0,0) scale(1.2)',
-                        '-moz-transform': 'translate3d('+offset+'px,0,0) scale(1.2)'
-                    });
-                }
-            }
-
-            $scope.cswipeSnap = {onActive:activeBig};
-            $scope.cswipeSnapKinetic = {onActive:activeBig};
-            $scope.cswipeSnapOne = {onActive:activeBig};
 
             // generate 40 cards
-            $scope.cards = [];
+            var cards =[];
             var types = ['cats','fashion','nature','food','abstract','nightlife'];
             for (var i=0; i<40; i++){
                 var t = types[i % types.length];
-                $scope.cards.push({image:'http://lorempixel.com/200/200/' + t + '/'+((i%10)+1), title: t});
+                cards.push({image:'http://lorempixel.com/200/200/' + t + '/'+((i%10)+1), title: t});
             }
+            $scope.cardflow.cards = cards;
         });
     </script>
 </html>
