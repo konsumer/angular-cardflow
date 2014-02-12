@@ -115,7 +115,7 @@
                             }
                         });
 
-                        var offset = 0, position=0, velocity=0, timestamp, delta;
+                        var offset = 0, position=0, velocity=0, timestamp;
 
                         $swipe.bind(wrapperEl, {
                             start: function(coords){
@@ -141,6 +141,19 @@
                                     // figure out current card from position
                                     var current = Math.floor((position/-cardWidth) + 0.5);
 
+                                    if (scope.mode == 'swipeSnapKinetic'){
+                                        //  calculate velocity here
+                                        var now = Date.now();
+                                        var elapsed = now-timestamp;
+                                        var distance = offset-coords.x;
+                                        var velocity = distance/elapsed;
+
+                                        if (Math.abs(velocity) > 1){
+                                            current = Math.floor(current + velocity);
+                                        }
+
+                                    }
+
                                     if (current >=0){
                                         if (current > (cardEls.length-1)){
                                             current = cardEls.length-1;
@@ -150,22 +163,18 @@
                                     }
                                     
                                     // trigger update
+                                    if (scope.model.current==current){
+                                        scope.model.current=-1;
+                                        scope.$apply();
+                                    }
                                     scope.model.current=current;
                                     scope.$apply();
                                 }
                             },
                             move: function(coords){
-                                if (scope.mode == 'swipeSnapKinetic'){
-                                    //  calculate velocity here
-                                    var now = Date.now();
-                                }
-
+                                // move cards to current position
                                 if (scope.mode != 'swipe'){
-                                    if (Math.abs(velocity) > 1){
-                                        position = (coords.x - (scope.model.current*cardWidth) - offset) * (Math.abs(velocity)/4);
-                                    }else{
-                                        position = coords.x - (scope.model.current*cardWidth) - offset;
-                                    }
+                                    position = coords.x - (scope.model.current*cardWidth) - offset;
                                 }else{
                                     position = coords.x - offset;
                                 }
