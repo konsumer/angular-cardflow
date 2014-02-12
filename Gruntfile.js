@@ -7,7 +7,7 @@ module.exports = function(grunt) {
 			'src': ['**']
 		},
 		'clean': {
-			'default': ['dist/'],
+			'default': ['dist/', '.grunt', '.tmp'],
 		},
 		'useminPrepare': {
 			'html': ['examples/*.html'],
