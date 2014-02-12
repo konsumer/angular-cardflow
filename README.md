@@ -9,7 +9,7 @@ This is for making ng-repeat items that flow into a nice & efficient coverflow. 
 
 Here are some more features:
 
-*  mobile-friendly, tested on webkit+firefox
+*  mobile-friendly, tested on webkit+firefox. Should work ok on IE8+ (untested)
 *  use CSS 3D transformations directly, no `requestAnimationFrame()` or `setTimeout()`.
 *  all the look is defined in your own CSS, or use mine, if you want it to look the same.
 *  data-binding & callbacks
@@ -34,7 +34,7 @@ You can force the current card, if you don't want it to be the first one.
 
 You can set different interaction modes with the `mode` attribute. Here are the available options:
 * `none` - no swipe interaction: just use model.current to set cards. You will have to do your own bounds checking
-* `swipeSnapKinetic` (default) - swipe left or right, watch velocity & snap to individual card on slow down. sort of like [angular-coverflow](https://github.com/southdesign/angular-coverflow), but snap to cards.
+* `swipeSnapKinetic` (default) - swipe left or right, watch velocity & snap to individual card on slow down. sort of like [angular-coverflow](https://github.com/southdesign/angular-coverflow), but snap to cards. For some reason, on firefox, this looks like `swipeSnap`. Need to investigate.
 * `swipeSnap` - no kinetic, just snap to new active card
 * `swipe` - Like swipeSnap, but no snapping to card
 * `swipeSnapOne` - swipe left or right to advance 1. sort of like [angular-carousel](https://github.com/revolunet/angular-carousel).
@@ -44,5 +44,4 @@ You can set different interaction modes with the `mode` attribute. Here are the 
 
 `model` is used if you need to reach into the directive with data-binding. It's cool for indicators or buttons that jump to specific cards. It gives you access to these:
 
-*  `current` - the read/writable index of the current card
-*  `onActive`  - called when an active card is selected. It looks like this: `function(active_element, offset, scope){ }`
+*  `current` - the read/writable index of the current card. Put a `$watch` on it to dosomethign when current changes
