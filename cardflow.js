@@ -41,11 +41,6 @@
         }
     }
 
-    // wrapper for just setting X-transform
-    function setPositionX(element, position){
-        setTransform(element, [undefined, undefined, undefined, undefined, position, undefined]);
-    }
-
     var module = angular.module('angular-cardflow', ['ngTouch']);
 
     module.directive('cardflow', ['$swipe', '$timeout', function($swipe, $timeout) {
@@ -57,42 +52,49 @@
             link: function(scope, element, attrs){
                 // next available tick, so element is populated with transcluded content
                 $timeout(function(){
-                    scope.cardWidth = 0;
-                    scope.wrapperEl=angular.element(element.find('div')[0]);
-                    scope.containerEl=angular.element(scope.wrapperEl.find('div')[0]);
                     scope.model = scope.model || {};
+                    scope.model.cardWidth = 0;
+                    scope.model.wrapperEl=angular.element(element.find('div')[0]);
+                    scope.model.containerEl=angular.element(scope.model.wrapperEl.find('div')[0]);
                     scope.model.current = scope.current || scope.model.current || 0;
                     scope.model.cards = scope.model.cards || [];
                     scope.mode = attrs.mode || 'swipeSnapKinetic';
-                    var increment=1;
+                    scope.model.increment=1;
 
-                    // track cards list, but use scope.cardEls just in case no model was set
+                    // wrapper for just setting X-transform of scope.model.containerEl[0]
+                    function setPositionX(position){
+                        setTransform(scope.model.containerEl[0], [undefined, undefined, undefined, undefined, position, undefined]);
+                    }
+
+                    scope.model.setPositionX = setPositionX;
+
+                    // track cards list, but use scope.model.cardEls just in case no model was set
                     scope.$watch(function (){ return scope.model.cards; }, function(){
-                        scope.cardEls = scope.containerEl.children();
-                        if (scope.cardEls && scope.cardEls[1]){
-                            scope.cardWidth = scope.cardEls[1].offsetLeft-scope.cardEls[0].offsetLeft;
+                        scope.model.cardEls = scope.model.containerEl.children();
+                        if (scope.model.cardEls && scope.model.cardEls[1]){
+                            scope.model.cardWidth = scope.model.cardEls[1].offsetLeft-scope.model.cardEls[0].offsetLeft;
 
-                            if (scope.cardWidth === 0){
-                                scope.cardWidth = scope.cardEls[0].offsetWidth;
+                            if (scope.model.cardWidth === 0){
+                                scope.model.cardWidth = scope.model.cardEls[0].offsetWidth;
                             }
 
-                            var totalWidth = (scope.cardWidth*scope.cardEls.length) + scope.cardEls[1].offsetLeft;
+                            var totalWidth = (scope.model.cardWidth*scope.model.cardEls.length) + scope.model.cardEls[1].offsetLeft;
                             //set container to wide enough to keep  from wrapping
-                            scope.containerEl.css({'width': totalWidth + 'px'});
+                            scope.model.containerEl.css({'width': totalWidth + 'px'});
 
-                            scope.model.pageSize = Math.floor(scope.wrapperEl[0].clientWidth / scope.cardWidth);
-                            increment = (scope.mode == 'swipeSnapOne') ? 1 : scope.model.pageSize;
+                            scope.model.pageSize = Math.floor(scope.model.wrapperEl[0].clientWidth / scope.model.cardWidth);
+                            scope.model.increment = (scope.mode == 'swipeSnapOne') ? 1 : scope.model.pageSize;
                         }
                     });                    
 
                     if ( scope.mode != 'swipe'){
                         scope.$watch(function (){ return scope.model.current; }, function(){
-                            if (scope.cardEls){
-                                scope.cardEls.removeClass('cardflow-active');
-                                var current = angular.element(scope.cardEls[scope.model.current]);
+                            if (scope.model.cardEls){
+                                scope.model.cardEls.removeClass('cardflow-active');
+                                var current = angular.element(scope.model.cardEls[scope.model.current]);
                                 current.addClass('cardflow-active');
-                                if (scope.cardWidth){
-                                    setPositionX(scope.containerEl[0], (scope.cardWidth * -scope.model.current));
+                                if (scope.model.cardWidth){
+                                    setPositionX((scope.model.cardWidth * -scope.model.current));
                                 }
                             }
                         });
@@ -100,13 +102,13 @@
 
                     if (scope.mode == 'swipeSnapOne' || scope.mode == 'swipeSnapPage'){
                         scope.swipeLeft = function(){
-                            var current = scope.model.current+increment;
-                            if (current < scope.cardEls.length){
+                            var current = scope.model.current+scope.model.increment;
+                            if (current < scope.model.cardEls.length){
                                 scope.model.current = current;
                             }
                         };
                         scope.swipeRight = function(){
-                            var current = scope.model.current-increment;
+                            var current = scope.model.current-scope.model.increment;
                             if (current >= 0){
                                 scope.model.current = current;
                             }
@@ -117,12 +119,12 @@
 
                         // store transition
                         var transition={};
-                        var t = window.getComputedStyle(scope.containerEl[0])['transition'];
+                        var t = window.getComputedStyle(scope.model.containerEl[0])['transition'];
                         if (t){
                             transition.transition = t + '';
                         }
-                        angular.forEach(['moz','o','webkit'], function(p){
-                            t = window.getComputedStyle(scope.containerEl[0])[p+'Transition'];
+                        angular.forEach(['moz','o','webkit','ms'], function(p){
+                            t = window.getComputedStyle(scope.model.containerEl[0])[p+'Transition'];
                             if (t){
                                 transition[p+'Transition'] = t;
                             }
@@ -130,16 +132,16 @@
 
                         var offset = 0, position=0, velocity=0, timestamp;
 
-                        $swipe.bind(scope.wrapperEl, {
+                        $swipe.bind(scope.model.wrapperEl, {
                             start: function(coords){
-                                scope.cardEls.removeClass('cardflow-active');
+                                scope.model.cardEls.removeClass('cardflow-active');
                                 offset = (scope.mode == 'swipe') ? coords.x-position : coords.x;
                                 
                                 // remove transition
-                                angular.forEach(['moz','o','webkit'], function(p){
-                                    scope.containerEl.css(p+'Transition', 'none');
+                                angular.forEach(['moz','o','webkit','ms'], function(p){
+                                    scope.model.containerEl.css(p+'Transition', 'none');
                                 });
-                                scope.containerEl.css({'transition':'none'});
+                                scope.model.containerEl.css({'transition':'none'});
 
                                 if (scope.mode == 'swipeSnapKinetic'){
                                     velocity = 0;
@@ -148,11 +150,11 @@
                             },
                             end: function(coords){
                                 // restore transition
-                                scope.containerEl.css(transition);
+                                scope.model.containerEl.css(transition);
                                 
                                 if ( scope.mode != 'swipe'){
                                     // figure out current card from position
-                                    var current = Math.floor((position/-scope.cardWidth) + 0.5);
+                                    var current = Math.floor((position/-scope.model.cardWidth) + 0.5);
 
                                     if (scope.mode == 'swipeSnapKinetic'){
                                         //  calculate velocity here
@@ -168,8 +170,8 @@
                                     }
 
                                     if (current >=0){
-                                        if (current > (scope.cardEls.length-1)){
-                                            current = scope.cardEls.length-1;
+                                        if (current > (scope.model.cardEls.length-1)){
+                                            current = scope.model.cardEls.length-1;
                                         }
                                     }else{
                                         current = 0;
@@ -187,12 +189,12 @@
                             move: function(coords){
                                 // move cards to current position
                                 if (scope.mode != 'swipe'){
-                                    position = coords.x - (scope.model.current*scope.cardWidth) - offset;
+                                    position = coords.x - (scope.model.current*scope.model.cardWidth) - offset;
                                 }else{
                                     position = coords.x - offset;
                                 }
 
-                                setPositionX(scope.containerEl[0], position);
+                                setPositionX(position);
                             },
                         });
                     }

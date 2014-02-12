@@ -1,6 +1,6 @@
 {
   "name": "angular-cardflow",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Efficient & versatile CSS3 carousel/coverflow for angular",
   "main": "cardflow.js",
   "directories": {
