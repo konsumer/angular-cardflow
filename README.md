@@ -39,7 +39,6 @@ You can set different interaction modes with the `mode` attribute. Here are the 
 * `swipe` - Like swipeSnap, but no snapping to card
 * `swipeSnapOne` - swipe left or right to advance 1. sort of like [angular-carousel](https://github.com/revolunet/angular-carousel).
 * `swipeSnapPage` - Like swipeSnapOne, but by the page
-* `swipeKinetic` - Like swipeSnapKinetic, but no snapping to card
 
 ## model
 
