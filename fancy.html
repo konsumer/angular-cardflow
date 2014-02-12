@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="user-scalable=0, initial-scale=1.0">
-        <title>Simple Cardflow</title>
+        <title>Fancy Cardflow</title>
         <link href="demo.css" rel="stylesheet">
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.11/angular.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.11/angular-touch.min.js"></script>
@@ -16,13 +16,13 @@
     <body ng-controller="example-controller">
         <div class="container">
             <a id="github" href="https://github.com/konsumer/angular-cardflow">view on github</a>
-            <h1>Simple Cardflow</h1>
-            <p>This is an example with no model, and minimal amount of code. Swipe left or right.</p>
+            <h1>Fancy Cardflow</h1>
+            <p>I styled this one to be super-fancy. In general, gradients &amp; shadows will decrease performance. Try to keep alpha on moving things to a minimum.</p>
             <p><a href="index.html">Here</a> is a more complete example.</p>
             <p><a href="carousel.html">Here</a> is an example that is sort of like angular-carousel.</p>
-            <p><a href="fancy.html">Here</a> is a more fancy-styled example.</p>
-            
-            <cardflow>
+            <p><a href="simple.html">Here</a> is a simple example.</p>
+
+            <cardflow class="cardflow-fancy">
                 <div class="cardflow-card" ng-repeat="card in cards" style="left: {{$index*210}}px; background-image: url( {{card.image}} )">
                     {{ card.title }}
                 </div>
