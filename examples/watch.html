@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="angular-cardflow-example">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="user-scalable=0, initial-scale=1.0">
+        <title>Watch Cardflow</title>
+        <link href="demo.css" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.11/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.11/angular-touch.min.js"></script>
+        
+        <!-- build:js cardflow.min.js -->
+        <script src="../cardflow.js"></script>
+        <!-- endbuild -->
+
+        <!-- build:css cardflow.min.css -->
+        <link href="cardflow.css" rel="stylesheet">
+        <!-- endbuild -->
+    </head>
+
+    <body ng-controller="example-controller">
+        <div class="container">
+            <a id="github" href="https://github.com/konsumer/angular-cardflow">view on github</a>
+            <h1>Watch Cardflow</h1>
+            <p>I apply a <code>$watch()</code> to <code>current</code> in my cardflow model. This allows me to do things when the selected card changes. View the console to see what info you have access to.</p>
+            <p><a href="simple.html">Here</a> is a simple example.</p>
+            <p><a href="index.html">Here</a> is a more complete example.</p>
+            <p><a href="carousel.html">Here</a> is an example that is sort of like angular-carousel.</p>
+            <p><a href="fancy.html">Here</a> is a more fancy-styled example.</p>
+            
+            <cardflow model="cardflow" class="watch-demo">
+                <div class="cardflow-card" ng-repeat="card in cardflow.cards" style="background-image: url( {{card.image}} )">
+                    {{ card.title }}
+                </div>
+            </cardflow>
+        </div>
+    </body>
+
+    <script>
+    // Example controller
+    angular.module('angular-cardflow-example', ['angular-cardflow'])
+        .controller('example-controller', function($scope, $timeout){
+            $scope.cardflow={};
+            // I use a timeout so I have access to all the elements
+            $timeout(function(){
+                $scope.$watch(function(){ return $scope.cardflow.current; }, function(){
+                    console.log($scope.cardflow);
+                });
+            }, 100);
+            
+
+            // generate 40 cards
+            $scope.cardflow.cards = [];
+            var types = ['cats','fashion','nature','food','abstract','nightlife'];
+            for (var i=0; i<40; i++){
+                var t = types[i % types.length];
+                $scope.cardflow.cards.push({image:'http://lorempixel.com/198/198/' + t + '/'+((i%10)+1), title: t});
+            }
+        });
+    </script>
+</html>
