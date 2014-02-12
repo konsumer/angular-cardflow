@@ -31,6 +31,15 @@ body, a, a:link, a:active, a:visited {
 	top: 10px;
 }
 
+/* disable indent & active card for page-driven coverflows */
+.page .cardflow-container {
+	padding-left:0;
+}
+
+.page .cardflow-card.cardflow-active {
+    border-color: #000;
+}
+
 @media (max-width: 950px) {
 	.container {
 		width: 100%;
