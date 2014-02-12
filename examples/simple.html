@@ -24,8 +24,8 @@
             <p>Swipe left or right.</p>
             <p><a href="index.html">Here</a> is a more complete example.</p>
             <p><a href="carousel.html">Here</a> is an example that is sort of like angular-carousel.</p>
-            <cardflow>
-                <div class="cardflow-card" ng-repeat="card in cards" style="left: {{$index*210}}px; background-image: url( {{card.image}} )">
+            <cardflow model="cardflow">
+                <div class="cardflow-card" ng-repeat="card in cardflow.cards" style="left: {{$index*210}}px; background-image: url( {{card.image}} )">
                     {{ card.title }}
                 </div>
             </cardflow>
@@ -36,12 +36,13 @@
     // Example controller
     angular.module('angular-cardflow-example', ['angular-cardflow'])
         .controller('example-controller', function($scope){
+            $scope.cardflow = {};
             // generate 40 cards
-            $scope.cards = [];
+            $scope.cardflow.cards = [];
             var types = ['cats','fashion','nature','food','abstract','nightlife'];
             for (var i=0; i<40; i++){
                 var t = types[i % types.length];
-                $scope.cards.push({image:'http://lorempixel.com/200/200/' + t + '/'+((i%10)+1), title: t});
+                $scope.cardflow.cards.push({image:'http://lorempixel.com/200/200/' + t + '/'+((i%10)+1), title: t});
             }
         });
     </script>

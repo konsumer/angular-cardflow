@@ -34,6 +34,16 @@
                 </div>
             </cardflow>
 
+            <h2>none (as page)</h2>
+            <p>Only buttons will change current page</p>
+            <button ng-click="cardflowNonePage.current=cardflowNonePage.current-cardflowNonePage.pageSize" ng-disabled="cardflowNonePage.current <= 0">&lt;</button> {{ cardflowNonePage.current/cardflowNonePage.pageSize+1 }} / {{ cardflowNonePage.cards.length/cardflowNonePage.pageSize }}
+            <button ng-click="cardflowNonePage.current=cardflowNonePage.current+cardflowNonePage.pageSize"  ng-disabled="cardflowNonePage.current >= (cardflowNonePage.cards.length-cardflowNonePage.pageSize)">&gt;</button>
+            <cardflow model="cardflowNonePage" mode="none" class="page">
+                <div class="cardflow-card" ng-repeat="card in cardflowNonePage.cards" style="background-image: url( {{card.image}} )">
+                    {{ card.title }}
+                </div>
+            </cardflow>
+
             <h2>swipeSnapOne</h2>
             <p>Swipe right or left to scroll active card by 1.</p>
             <button ng-click="cardflowSnapOne.current=cardflowSnapOne.current-1" ng-disabled="cardflowSnapOne.current <= 0">&lt;</button> {{ cardflowSnapOne.current+1 }} / {{ cardflowSnapOne.cards.length }}
@@ -44,8 +54,18 @@
                 </div>
             </cardflow>
 
+            <h2>swipeSnapPage</h2>
+            <p>Like swipeSnapOne, but by the page. This is sort of like how Netflix mobile app works.</p>
+            <button ng-click="cardflowSnapPage.current=cardflowSnapPage.current-cardflowSnapPage.pageSize" ng-disabled="cardflowSnapPage.current <= 0">&lt;</button> {{ cardflowSnapPage.current/cardflowSnapPage.pageSize+1 }} / {{ cardflowSnapPage.cards.length/cardflowSnapPage.pageSize }}
+            <button ng-click="cardflowSnapPage.current=cardflowSnapPage.current+cardflowSnapPage.pageSize"  ng-disabled="cardflowSnapPage.current >= (cardflowSnapPage.cards.length-cardflowSnapPage.pageSize)">&gt;</button>
+            <cardflow model="cardflowSnapPage" mode="swipeSnapPage" class="page">
+                <div class="cardflow-card" ng-repeat="card in cardflowSnapPage.cards" style="background-image: url( {{card.image}} )">
+                    {{ card.title }}
+                </div>
+            </cardflow>
+
             <h2>swipeSnap</h2>
-            <p>scroll left or right to move cards and set current</p>
+            <p>Scroll left or right to move cards and set current</p>
             <button ng-click="cardflowSnap.current=cardflowSnap.current-1" ng-disabled="cardflowSnap.current <= 0">&lt;</button> {{ cardflowSnap.current+1 }} / {{ cardflowSnap.cards.length }}
             <button ng-click="cardflowSnap.current=cardflowSnap.current+1"  ng-disabled="cardflowSnap.current >= (cardflowSnap.cards.length-1)">&gt;</button>
             <cardflow model="cardflowSnap" mode="swipeSnap">
@@ -53,6 +73,17 @@
                     {{ card.title }}
                 </div>
             </cardflow>
+
+            <h2>swipeSnapKinetic</h2>
+            <p>Scroll left or right to move cards and set current</p>
+            <button ng-click="cardflowSnapKinetic.current=cardflowSnapKinetic.current-1" ng-disabled="cardflowSnapKinetic.current <= 0">&lt;</button> {{ cardflowSnapKinetic.current+1 }} / {{ cardflowSnapKinetic.cards.length }}
+            <button ng-click="cardflowSnapKinetic.current=cardflowSnapKinetic.current+1"  ng-disabled="cardflowSnapKinetic.current >= (cardflowSnapKinetic.cards.length-1)">&gt;</button>
+            <cardflow model="cardflowSnapKinetic" mode="swipeSnapKinetic">
+                <div class="cardflow-card" ng-repeat="card in cardflowSnapKinetic.cards" style="background-image: url( {{card.image}} )">
+                    {{ card.title }}
+                </div>
+            </cardflow>
+            
         </div>
 
     </body>
@@ -73,6 +104,9 @@
             $scope.cardflowNone = {cards:cards};
             $scope.cardflowSnapOne = {cards:cards};
             $scope.cardflowSnap = {cards:cards};
+            $scope.cardflowSnapPage = {cards:cards};
+            $scope.cardflowSnapKinetic = {cards:cards};
+            $scope.cardflowNonePage = {cards:cards};
         });
     </script>
 </html>

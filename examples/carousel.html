@@ -13,7 +13,7 @@
         <!-- endbuild -->
 
         <!-- build:css cardflow-carousel.min.css -->
-        <link href="cardflow-carousel.css" rel="stylesheet">
+        <link href="cardflow.css" rel="stylesheet">
         <!-- endbuild -->
     </head>
 
@@ -27,20 +27,12 @@
             <p><a href="index.html">Here</a> is a more complete example.</p>
             <p><a href="simple.html">Here</a> is a simple example.</p>
 
-            <div class="cardflow-carousel">
-
-                <cardflow atype="swipeSnapOne" margin="1" model="cardflow">
-                    <div class="cardflow-card" ng-repeat="card in cards" style="left: {{$index*400}}px; background-image: url( {{card.image}} )">
-                        {{ card.title }}
-                    </div>
-                </cardflow>
-
-                <!-- make an indicator with regular angular stuff! -->
-                <div class="indicators">
-                    <div class="indicator" ng-click="cardflow.current=$index" ng-repeat="card in cards" ng-class="{ active: cardflow.current == $index }">
+            <cardflow model="cardflow" mode="swipeSnapOne" class="page carousel">
+                <div class="cardflow-card" ng-repeat="card in cardflow.cards" style="background-image: url( {{card.image}} )">
+                    {{ card.title }}
                 </div>
+            </cardflow>
 
-            </div>
         </div>
 
     </body>
@@ -53,11 +45,11 @@
             $scope.cardflow={};
             
             // generate 40 cards
-            $scope.cards = [];
+            $scope.cardflow.cards = [];
             var types = ['cats','fashion','nature','food','abstract','nightlife'];
             for (var i=0; i<40; i++){
                 var t = types[i % types.length];
-                $scope.cards.push({image:'http://lorempixel.com/400/400/' + t + '/'+((i%10)+1), title: t});
+                $scope.cardflow.cards.push({image:'http://lorempixel.com/400/400/' + t + '/'+((i%10)+1), title: t});
             }
         });
     </script>

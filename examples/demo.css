@@ -40,6 +40,14 @@ body, a, a:link, a:active, a:visited {
     border-color: #000;
 }
 
+.carousel .cardflow-wrapper {
+	width: 200px;
+}
+
+.carousel .cardflow-card{
+	margin-right:0;
+}
+
 @media (max-width: 950px) {
 	.container {
 		width: 100%;

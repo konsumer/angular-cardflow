@@ -37,6 +37,7 @@ You can set different interaction modes with the `mode` attribute. Here are the 
 * `swipeSnapKinetic` (default) - swipe left or right, watch velocity & snap to individual card on slow down. sort of like [angular-coverflow](https://github.com/southdesign/angular-coverflow), but snap to cards.
 * `swipeSnap` - no kinetic, just snap to new active card
 * `swipeSnapOne` - swipe left or right to advance 1. sort of like [angular-carousel](https://github.com/revolunet/angular-carousel).
+* `swipeSnapPage` - Like swipeSnapOne, but by the page
 
 ## model
 
