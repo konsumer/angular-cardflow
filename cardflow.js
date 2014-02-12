@@ -64,7 +64,6 @@
                     scope.model.current = scope.current || scope.model.current || 0;
                     scope.model.cards = scope.model.cards || [];
                     scope.mode = attrs.mode || 'swipeSnapKinetic';
-                    scope.model.onActive = scope.model.onActive || function(){};
                     var increment=1;
 
                     // track cards list, but use scope.cardEls just in case no model was set

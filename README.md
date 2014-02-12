@@ -22,7 +22,7 @@ See files in `examples` for usage examples, but here's the basics:
 
 1. Include the cardflow.js script provided by this component into your app. (if you are using bower, type `bower install angular-cardflow`, then add `bower_components/angular-cardflow/cardflow.js` to  your HTML)
 2. Add angular-cardflow as a module dependency to your app.
-3. Add CSS to make it look nice. I tried to keep all of the look & animation in CSS only, for maximum configurability. There is an example in `examples/cardflow.css`. You may want to disable shadows & gradients for good performance on mobile.
+3. Add CSS to make it look nice. I tried to keep all of the look & animation in CSS only, for maximum configurability. There is a simple example in `examples/cardflow.css`, and see `.cardflow-fancy` stuff in `examples/demo.css` for fancier styles. You may not want to use shadows & gradients on things that move (or things under moving things) for good performance on mobile.
 
 ## Attributes
 
@@ -44,4 +44,4 @@ You can set different interaction modes with the `mode` attribute. Here are the 
 
 `model` is used if you need to reach into the directive with data-binding. It's cool for indicators or buttons that jump to specific cards. It gives you access to these:
 
-*  `current` - the read/writable index of the current card. Put a `$watch` on it to dosomethign when current changes
+*  `current` - the read/writable index of the current card. Put a `$watch` on it to do something when current changes
