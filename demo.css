@@ -59,6 +59,11 @@ body,a,a:link,a:active,a:visited {
     margin-right: 0;
 }
 
+/* disable dragging */
+.cardflow-card img {
+    pointer-events: none;
+}
+
 .cardflow-carousel .indicators {
     position: absolute;
     background-color: #000;
