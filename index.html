@@ -25,6 +25,16 @@
             <p><a href="simple.html">Here</a> is a simple example.</p>
             <p><a href="fancy.html">Here</a> is a more fancy-styled example.</p>
 
+            <h2>swipeSnapKinetic</h2>
+            <p>Scroll left or right to move cards and set current</p>
+            <button ng-click="cardflowSnapKinetic.current=cardflowSnapKinetic.current-1" ng-disabled="cardflowSnapKinetic.current <= 0">&lt;</button> {{ cardflowSnapKinetic.current+1 }} / {{ cardflowSnapKinetic.cards.length }}
+            <button ng-click="cardflowSnapKinetic.current=cardflowSnapKinetic.current+1"  ng-disabled="cardflowSnapKinetic.current >= (cardflowSnapKinetic.cards.length-1)">&gt;</button>
+            <cardflow model="cardflowSnapKinetic" mode="swipeSnapKinetic">
+                <div class="cardflow-card" ng-repeat="card in cardflowSnapKinetic.cards" style="background-image: url( {{card.image}} )">
+                    {{ card.title }}
+                </div>
+            </cardflow>
+
             <h2>none</h2>
             <p>Only buttons will change current card</p>
             <button ng-click="cardflowNone.current=cardflowNone.current-1" ng-disabled="cardflowNone.current <= 0">&lt;</button> {{ cardflowNone.current+1 }} / {{ cardflowNone.cards.length }}
@@ -81,17 +91,7 @@
                 <div class="cardflow-card" ng-repeat="card in cardflowSnap.cards" style="background-image: url( {{card.image}} )">
                     {{ card.title }}
                 </div>
-            </cardflow>
-
-            <h2>swipeSnapKinetic</h2>
-            <p>Scroll left or right to move cards and set current</p>
-            <button ng-click="cardflowSnapKinetic.current=cardflowSnapKinetic.current-1" ng-disabled="cardflowSnapKinetic.current <= 0">&lt;</button> {{ cardflowSnapKinetic.current+1 }} / {{ cardflowSnapKinetic.cards.length }}
-            <button ng-click="cardflowSnapKinetic.current=cardflowSnapKinetic.current+1"  ng-disabled="cardflowSnapKinetic.current >= (cardflowSnapKinetic.cards.length-1)">&gt;</button>
-            <cardflow model="cardflowSnapKinetic" mode="swipeSnapKinetic">
-                <div class="cardflow-card" ng-repeat="card in cardflowSnapKinetic.cards" style="background-image: url( {{card.image}} )">
-                    {{ card.title }}
-                </div>
-            </cardflow>            
+            </cardflow>          
         </div>
 
     </body>
