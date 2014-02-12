@@ -23,7 +23,7 @@
             <p><a href="fancy.html">Here</a> is a more fancy-styled example.</p>
             
             <cardflow>
-                <div class="cardflow-card" ng-repeat="card in cards" style="left: {{$index*210}}px; background-image: url( {{card.image}} )">
+                <div class="cardflow-card" ng-repeat="card in cards" style="background-image: url( {{card.image}} )">
                     {{ card.title }}
                 </div>
             </cardflow>
