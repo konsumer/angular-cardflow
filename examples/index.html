@@ -24,6 +24,10 @@
 
             <h1>angular-cardflow</h1>
 
+            <p>Listed here are various ways you can use this project with ngRepeats.</p>
+            <p><a href="carousel.html">Here</a> is gallery/carousel example.</p>
+            <p><a href="simple.html">Here</a> is a simple example.</p>
+
             <h2>none</h2>
             <p>Only buttons will change current card</p>
             <button ng-click="cardflowNone.current=cardflowNone.current-1" ng-disabled="cardflowNone.current <= 0">&lt;</button> {{ cardflowNone.current+1 }} / {{ cardflowNone.cards.length }}
@@ -40,6 +44,14 @@
             <button ng-click="cardflowNonePage.current=cardflowNonePage.current+cardflowNonePage.pageSize"  ng-disabled="cardflowNonePage.current >= (cardflowNonePage.cards.length-cardflowNonePage.pageSize)">&gt;</button>
             <cardflow model="cardflowNonePage" mode="none" class="page">
                 <div class="cardflow-card" ng-repeat="card in cardflowNonePage.cards" style="background-image: url( {{card.image}} )">
+                    {{ card.title }}
+                </div>
+            </cardflow>
+
+            <h2>swipe</h2>
+            <p>Scroll left or right to move cards. No current is tracked. This is sort of like how Hulu mobile app works.</p>
+            <cardflow model="cardflowSwipe" mode="swipe" class="page">
+                <div class="cardflow-card" ng-repeat="card in cardflowSwipe.cards" style="background-image: url( {{card.image}} )">
                     {{ card.title }}
                 </div>
             </cardflow>
@@ -83,6 +95,8 @@
                     {{ card.title }}
                 </div>
             </cardflow>
+
+            
             
         </div>
 
@@ -107,6 +121,7 @@
             $scope.cardflowSnapPage = {cards:cards};
             $scope.cardflowSnapKinetic = {cards:cards};
             $scope.cardflowNonePage = {cards:cards};
+            $scope.cardflowSwipe = {cards:cards};
         });
     </script>
 </html>

@@ -27,11 +27,20 @@
             <p><a href="index.html">Here</a> is a more complete example.</p>
             <p><a href="simple.html">Here</a> is a simple example.</p>
 
-            <cardflow model="cardflow" mode="swipeSnapOne" class="page carousel">
-                <div class="cardflow-card" ng-repeat="card in cardflow.cards" style="background-image: url( {{card.image}} )">
-                    {{ card.title }}
+            <div class="cardflow-carousel">
+
+                <cardflow model="cardflow" mode="swipeSnapOne" class="page carousel">
+                    <div class="cardflow-card" ng-repeat="card in cardflow.cards" style="background-image: url( {{card.image}} )">
+                        {{ card.title }}
+                    </div>
+                </cardflow>
+
+                <!-- make an indicator with regular angular stuff! -->
+                <div class="indicators">
+                    <div class="indicator" ng-click="cardflow.current=$index" ng-repeat="card in cardflow.cards" ng-class="{ active: cardflow.current == $index }">
                 </div>
-            </cardflow>
+
+            </div>
 
         </div>
 

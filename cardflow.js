@@ -43,13 +43,13 @@
             'restrict': 'E',
             'template': '<div class="cardflow-wrapper" ng-swipe-left="swipeLeft($event)" ng-swipe-right="swipeRight($event)"><div class="cardflow-container" ng-transclude></div></div>',
             'transclude': true,
-            'scope': { 'model' : '=?', 'mode':'=?' },
+            'scope': { 'model' : '=?', 'mode':'=?', 'current':'=?' },
             link: function(scope, element, attrs){
                 // next available tick, so element is populated with transcluded content
                 $timeout(function(){
                     var cardEls, cardWidth = 0, wrapperEl=angular.element(element.find('div')[0]), containerEl=angular.element(wrapperEl.find('div')[0]), increment=1;
                     scope.model = scope.model || {};
-                    scope.model.current = scope.model.current || 0;
+                    scope.model.current = scope.current || scope.model.current || 0;
                     scope.model.cards = scope.model.cards || [];
                     scope.mode = attrs.mode || 'swipeSnapKinetic';
 
@@ -70,19 +70,20 @@
                             scope.model.pageSize = Math.floor(wrapperEl[0].clientWidth / cardWidth);
                             increment = (scope.mode == 'swipeSnapOne') ? 1 : scope.model.pageSize;
                         }
-                    });
-                    
+                    });                    
 
-                    scope.$watch(function (){ return scope.model.current; }, function(){
-                        if (cardEls){
-                            cardEls.removeClass('cardflow-active');
-                            var current = angular.element(cardEls[scope.model.current]);
-                            current.addClass('cardflow-active');
-                            if (cardWidth){
-                                setTransform(containerEl[0], [undefined, undefined, undefined, undefined, (cardWidth * -scope.model.current), undefined]);
+                    if ( scope.mode != 'swipe'){
+                        scope.$watch(function (){ return scope.model.current; }, function(){
+                            if (cardEls){
+                                cardEls.removeClass('cardflow-active');
+                                var current = angular.element(cardEls[scope.model.current]);
+                                current.addClass('cardflow-active');
+                                if (cardWidth){
+                                    setTransform(containerEl[0], [undefined, undefined, undefined, undefined, (cardWidth * -scope.model.current), undefined]);
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
 
                     if (scope.mode == 'swipeSnapOne' || scope.mode == 'swipeSnapPage'){
                         scope.swipeLeft = function(){
@@ -99,7 +100,7 @@
                         };
                     }
 
-                    if (scope.mode == 'swipeSnap' || scope.mode == 'swipeSnapKinetic'){
+                    if (scope.mode == 'swipeSnap' || scope.mode == 'swipeSnapKinetic' ||  scope.mode == 'swipe'){
 
                         // store transition
                         var transition={};
@@ -119,7 +120,7 @@
                         $swipe.bind(wrapperEl, {
                             start: function(coords){
                                 cardEls.removeClass('cardflow-active');
-                                offset = coords.x;
+                                offset = (scope.mode == 'swipe') ? coords.x-position : coords.x;
                                 
                                 // remove transition
                                 angular.forEach(['moz','o','webkit'], function(p){
@@ -136,35 +137,39 @@
                                 // restore transition
                                 containerEl.css(transition);
                                 
-                                // figure out current card from position
-                                var current = Math.floor((position/-cardWidth) + 0.5);
+                                if ( scope.mode != 'swipe'){
+                                    // figure out current card from position
+                                    var current = Math.floor((position/-cardWidth) + 0.5);
 
-                                if (current >=0){
-                                    if (current > (cardEls.length-1)){
-                                        current = cardEls.length-1;
+                                    if (current >=0){
+                                        if (current > (cardEls.length-1)){
+                                            current = cardEls.length-1;
+                                        }
+                                    }else{
+                                        current = 0;
                                     }
-                                }else{
-                                    current = 0;
+                                    
+                                    // trigger update
+                                    scope.model.current=current;
+                                    scope.$apply();
                                 }
-                                
-                                // trigger update
-                                scope.model.current=current;
-                                scope.$apply();
                             },
                             move: function(coords){
-                                var now = Date.now();
                                 if (scope.mode == 'swipeSnapKinetic'){
                                     //  calculate velocity here
+                                    var now = Date.now();
                                 }
 
-                                if (Math.abs(velocity) > 1){
-                                    timestamp=now;
-                                    offset = coords.x;
-                                    position = (coords.x - (scope.model.current*cardWidth) - offset) * (Math.abs(velocity)/4);
+                                if (scope.mode != 'swipe'){
+                                    if (Math.abs(velocity) > 1){
+                                        position = (coords.x - (scope.model.current*cardWidth) - offset) * (Math.abs(velocity)/4);
+                                    }else{
+                                        position = coords.x - (scope.model.current*cardWidth) - offset;
+                                    }
                                 }else{
-                                    position = coords.x - (scope.model.current*cardWidth) - offset;
+                                    position = coords.x - offset;
                                 }
-                                
+
                                 setTransform(containerEl[0], [undefined, undefined, undefined, undefined, position, undefined]);
                             },
                         });
