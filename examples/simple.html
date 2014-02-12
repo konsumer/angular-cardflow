@@ -21,14 +21,14 @@
         <div class="container">
             <a id="github" href="https://github.com/konsumer/angular-cardflow">view on github</a>
             <h1>Simple Cardflow</h1>
-            <p>This is an example with no model, and minimal amount of code. Swipe left or right.</p>
+            <p>This is an example with no model, and minimal amount of code using plain images. Swipe left or right.</p>
             <p><a href="index.html">Here</a> is a more complete example.</p>
             <p><a href="carousel.html">Here</a> is an example that is sort of like angular-carousel.</p>
             <p><a href="fancy.html">Here</a> is a more fancy-styled example.</p>
             
             <cardflow>
-                <div class="cardflow-card" ng-repeat="card in cards" style="background-image: url( {{card.image}} )">
-                    {{ card.title }}
+                <div class="cardflow-card" ng-repeat="card in cards">
+                    <img ng-src="{{card.image}}" alt="{{card.title}}"/>
                 </div>
             </cardflow>
         </div>
@@ -43,7 +43,7 @@
             var types = ['cats','fashion','nature','food','abstract','nightlife'];
             for (var i=0; i<40; i++){
                 var t = types[i % types.length];
-                $scope.cards.push({image:'http://lorempixel.com/200/200/' + t + '/'+((i%10)+1), title: t});
+                $scope.cards.push({image:'http://lorempixel.com/198/198/' + t + '/'+((i%10)+1), title: t});
             }
         });
     </script>
