@@ -13,6 +13,7 @@
                     prefix=p;
                 }
             });
+
             if (transform){
                 var m = transform.match(/\d+/g);
                 if (m && m.length == 6){
@@ -20,19 +21,22 @@
                 }else{
                     m = [1,0,0,1,0,0];
                 }
-                for(var i=0; i<6;i++){
-                    if (matrix[i] !== undefined){
-                        m[i] = matrix[i];
-                    }
-                }
-                var css= {};
-                if (!prefix){
-                    css['transform'] = 'matrix(' + m.join(',') + ')';
-                }else{
-                    css[prefix + 'Transform']='matrix(' + m.join(',') + ')';
-                }
-                angular.element(element).css(css);
+            }else{
+                 m = [1,0,0,1,0,0];
             }
+
+            for(var i=0; i<6;i++){
+                if (matrix[i] !== undefined){
+                    m[i] = matrix[i];
+                }
+            }
+            var css= {};
+            if (!prefix){
+                css['transform'] = 'matrix(' + m.join(',') + ')';
+            }else{
+                css[prefix + 'Transform']='matrix(' + m.join(',') + ')';
+            }
+            angular.element(element).css(css);
         }
     }
 
