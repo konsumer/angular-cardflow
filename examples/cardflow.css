@@ -77,15 +77,6 @@
     position: relative;
 }
 
-/* disable indent & active card for page-driven coverflows */
-.page .cardflow-container {
-    padding-left: 0;
-}
-
-.page .cardflow-card.cardflow-active {
-    border-color: #000;
-}
-
 /* style carousel single-card flows */
 .cardflow-carousel,.cardflow-carousel .cardflow-card,.cardflow-carousel .cardflow-container,.cardflow-carousel .cardflow-wrapper {
     width: 400px;
@@ -191,3 +182,21 @@ cardflow .cardflow-card.cardflow-active {
     -ms-transform: scale(1.1);
     transform: scale(1.1);
 }
+
+/* disable indent & active card for page-driven coverflows */
+.page .cardflow-container {
+    padding-left: 0;
+}
+
+.page .cardflow-card.cardflow-active {
+    border-color: #000;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -o-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+}
+
+
